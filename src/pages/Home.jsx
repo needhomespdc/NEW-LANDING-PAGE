@@ -1,7 +1,8 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { Download, ChevronLeft, ChevronRight, MapPin, TrendingUp, Home as HomeIcon, ArrowRight, Mail } from 'lucide-react'
+import { CircleUser, Download, ChevronLeft, ChevronRight, MapPin, TrendingUp, Home as HomeIcon, ArrowRight, Mail } from 'lucide-react'
 import Hero from '../components/Hero.jsx'
+import CountUp from '../components/CountUp.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 import FaqList from '../components/FaqList.jsx'
 import { properties } from '../data/properties.js'
@@ -15,8 +16,8 @@ const Head = ({ a, b, text }) => (
 )
 const AppBtn = () => <a href="#" className="inline-flex items-center gap-2 rounded-xl bg-primary px-7 py-3 text-[15px] font-medium text-white">Download App <Download size={16} /></a>
 
-const reviews = [['Folorunsho Azeez'], ['Felix Ikechukwu']]
-const bars = [['Jan', 28], ['Feb', 40], ['Mar', 52], ['Apr', 100], ['May', 58], ['Jun', 70]]
+const reviews = [['Folorunsho Azeez', 4.5], ['Felix Ikechukwu', 5]]
+const bars = [['Jan', 51], ['Feb', 71], ['Mar', 56], ['Apr', 100], ['May', 67], ['Jun', 67]]
 const stats = [['Active Investors', '1,250+'], ['Properties Listed', '35+'], ['Investments Funded', '₦2.4B+'], ['Avg. Project ROI', '18.7%']]
 const ways = [
   ['invest-fractional', 'Fractional Ownership', 'Own a share of premium properties and earn rental income.', '/investment/fractional-ownership'],
@@ -68,7 +69,7 @@ function Slider() {
 export default function Home() {
   return (
     <>
-      <Hero tone="orange" title="Your Smooth Journey to Property Ownership" accent="" ctas={false}
+      <Hero tone="orange" big animate title="Your Smooth Journey to Property Ownership" accent="" ctas={false}
         text="Co-develop, own a fraction, and grow wealth with trusted real estate investments, all in one secure platform.">
         <div className="mx-6 mt-8 border-t border-white/25 pt-6 md:mx-[48px]">
           <div className="flex flex-wrap justify-center gap-x-10 gap-y-3 text-sm text-white">
@@ -76,40 +77,56 @@ export default function Home() {
             <span className="inline-flex items-center gap-2"><HomeIcon size={18} />Co-own trusted Real estate Investment Portfolio</span>
           </div>
           <div className="mt-8 grid gap-4 lg:grid-cols-3">
-            <div className="rounded-2xl bg-white p-5 text-ink">
-              <h3 className="font-semibold">Verified &amp; Secure</h3>
-              <p className="mt-1 text-xs text-muted">Every property and transaction is verified for your peace of mind.</p>
-              <div className="mt-3 space-y-2">
-                {reviews.map(([n]) => (
-                  <div key={n} className="rounded-xl bg-[#1b1512] p-3 text-white">
-                    <div className="flex items-center justify-between text-sm"><span>{n}</span><span aria-label="5 stars" className="text-[#F5A623]">★★★★★</span></div>
-                    <p className="mt-1 text-[11px] text-white/70">"Every property and transaction is verified for your peace of mind."</p>
+            <div className="rounded-3xl bg-[#F8FAFC] p-6 text-ink">
+              <h3 className="text-2xl font-semibold">Verified &amp; Secure</h3>
+              <p className="mt-2 max-w-[360px] text-muted">Every property and transaction is verified for your peace of mind.</p>
+              <div className="mt-5 space-y-4">
+                {reviews.map(([n, rating], i) => (
+                  <div key={n} className="review-slide rounded-2xl bg-[#2A1204] p-4 text-white" style={{ animationDelay: `${i * 1.2}s` }}>
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="flex items-center gap-2 text-base font-medium"><CircleUser size={22} aria-hidden="true" />{n}</span>
+                      <span aria-label={`${rating} out of 5 stars`} className="whitespace-nowrap">
+                        {[0, 1, 2, 3, 4].map(j => <span key={j} aria-hidden="true" className="star-pop" style={{ color: j < Math.floor(rating) ? '#F26A1B' : '#7A3A12', animationDelay: `${i * 1.2 + 0.4 + j * 0.12}s` }}>★</span>)}
+                      </span>
+                    </div>
+                    <p className="mt-2 text-sm text-[#8E96A3]">“Every property and transaction is verified for your peace of mind.”</p>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="rounded-2xl bg-white p-5 text-ink">
-              <p className="text-sm text-muted">Total Portfolio Value</p>
-              <p className="mt-1 text-3xl font-semibold">₦125.4M</p>
-              <span className="mt-1 inline-block rounded-full bg-[#E3F4E6] px-2.5 py-0.5 text-[11px] text-[#2E8B43]">▲ 18.7% this month</span>
-              <svg viewBox="0 0 200 70" className="mt-2 h-20 w-full" role="img" aria-label="Portfolio value trending up">
-                <defs><linearGradient id="pg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="#EF6A1B" stopOpacity=".35" /><stop offset="1" stopColor="#EF6A1B" stopOpacity="0" /></linearGradient></defs>
-                <path d="M0 62 C30 60 50 50 80 47 S125 36 150 22 S185 8 200 4 V70 H0Z" fill="url(#pg)" /><path d="M0 62 C30 60 50 50 80 47 S125 36 150 22 S185 8 200 4" fill="none" stroke="#EF6A1B" strokeWidth="2" />
-              </svg>
-              <a href="#" className="mt-2 flex items-center justify-center gap-2 rounded-lg bg-[#2A1204] py-2.5 text-sm font-medium text-white">Download App <Download size={14} /></a>
+
+            <div className="flex flex-col gap-4">
+              <div className="relative min-h-[300px] flex-1 overflow-hidden rounded-3xl bg-[#F8FAFC] p-6 text-ink">
+                <div className="relative z-10">
+                  <p className="text-lg text-muted">Total Portfolio Value</p>
+                  <p className="mt-2 text-5xl font-extrabold tracking-tight text-[#2A1204] md:text-6xl">₦125.4M</p>
+                  <span className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#D5EDE0] px-4 py-1.5 text-sm text-[#2E8B43]">18.7% this month <span aria-hidden="true">▲</span></span>
+                </div>
+                <svg viewBox="0 -4 200 104" preserveAspectRatio="none" role="img" aria-label="Portfolio value trending up" className="chart-grow absolute bottom-0 left-4 h-1/2 w-[calc(100%-2rem)]">
+                  <defs><linearGradient id="pg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="#F4A77A" stopOpacity=".75" /><stop offset="1" stopColor="#F4A77A" stopOpacity="0" /></linearGradient></defs>
+                  <path d="M0 82 C16 72 32 46 52 46 C76 46 88 62 108 62 C136 62 148 8 176 2 C188 -1 196 4 200 10 V100 H0Z" fill="url(#pg)" />
+                  <path d="M0 82 C16 72 32 46 52 46 C76 46 88 62 108 62 C136 62 148 8 176 2 C188 -1 196 4 200 10" fill="none" stroke="#8B3A0A" strokeWidth="2.5" vectorEffect="non-scaling-stroke" />
+                </svg>
+              </div>
+              <a href="#" className="flex items-center justify-center gap-2 rounded-xl bg-[#2A1204] py-3.5 font-medium text-white">Download App <Download size={16} /></a>
             </div>
-            <div className="rounded-2xl bg-white p-5 text-ink">
-              <h3 className="font-semibold">Realtime Tracking</h3>
-              <p className="mt-1 text-xs text-muted">Monitor rental income and project milestones in real time.</p>
-              <div className="mt-3 flex h-28 items-end justify-between gap-3" role="img" aria-label="Monthly income bar chart, April highest at ₦15.2M">
-                {bars.map(([m, h]) => (
-                  <div key={m} className="flex flex-1 flex-col items-center justify-end gap-1">
-                    {m === 'Apr' && <span className="rounded bg-[#E3F4E6] px-1.5 py-0.5 text-[10px] text-[#2E8B43]">₦15.2M</span>}
-                    <div className={`w-full rounded-t ${m === 'Apr' ? 'bg-[#3FA34D]' : 'bg-[#B9DFB4]'}`} style={{ height: `${h * 0.7}%` }} />
-                    <span className="text-[11px] text-muted">{m}</span>
+
+            <div className="rounded-3xl bg-[#F8FAFC] p-6 text-ink">
+              <h3 className="text-2xl font-semibold">Realtime Tracking</h3>
+              <p className="mt-2 text-muted">Monitor rental income and project milestones in real time.</p>
+              <div className="mt-14 flex h-44 items-end gap-3" role="img" aria-label="Monthly income bar chart, April highest at ₦15.2M">
+                {bars.map(([m, h], i) => (
+                  <div key={m} className="relative flex h-full flex-1 items-end">
+                    {m === 'Apr' && (
+                      <span className="tip-pop absolute left-1/2 -translate-x-1/2 whitespace-nowrap rounded-xl bg-[#14663A] px-3 py-1.5 text-sm font-medium text-white" style={{ bottom: `calc(${h}% + 12px)`, animationDelay: `${i * 0.15 + 0.5}s` }}>
+                        ₦15.2M<span aria-hidden="true" className="absolute left-1/2 top-full -mt-1.5 size-3 -translate-x-1/2 rotate-45 bg-[#14663A]" />
+                      </span>
+                    )}
+                    <div className={`bar-grow w-full rounded-t-sm bg-gradient-to-b ${m === 'Apr' ? 'from-[#D5E6CD] to-[#6FA55A]' : 'from-[#EAF4E5] to-[#A8D39A]'}`} style={{ height: `${h}%`, animationDelay: `${i * 0.15}s` }} />
                   </div>
                 ))}
               </div>
+              <div className="mt-3 flex gap-3 text-center text-sm text-muted" aria-hidden="true">{bars.map(([m]) => <span key={m} className="flex-1">{m}</span>)}</div>
             </div>
           </div>
         </div>
@@ -119,7 +136,7 @@ export default function Home() {
         {stats.map(([l, v], i) => (
           <div key={l} className={`rounded-2xl p-8 ${i === 0 ? 'bg-[#2A1204] text-white' : 'bg-[#F1F4F8]'}`}>
             <p className={`text-sm ${i === 0 ? 'text-white/85' : 'text-muted'}`}>{l}</p>
-            <p className={`mt-3 text-5xl font-semibold ${i === 0 ? '' : 'text-primary'}`}>{v}</p>
+            <p className={`mt-3 text-5xl font-semibold ${i === 0 ? '' : 'text-primary'}`}><CountUp value={v} /></p>
           </div>
         ))}
       </section>

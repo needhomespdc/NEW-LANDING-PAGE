@@ -15,3 +15,27 @@ body { font-family: var(--font-sans); color: var(--color-ink); background: #fff;
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
 .reveal-in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+/* Index hero card animations (loop forever; each item is staggered with animation-delay) */
+@keyframes bar-grow { 0% { transform: scaleY(0); } 30% { transform: scaleY(1); } 80% { transform: scaleY(1); } 100% { transform: scaleY(0); } }
+.bar-grow { transform-origin: bottom; animation: bar-grow 4.5s cubic-bezier(.3,.7,.2,1) infinite both; }
+@keyframes tip-pop { 0%, 25% { opacity: 0; transform: translateY(6px) scale(.9); } 35%, 80% { opacity: 1; transform: none; } 90%, 100% { opacity: 0; transform: translateY(6px) scale(.9); } }
+.tip-pop { animation: tip-pop 4.5s ease infinite both; }
+@keyframes chart-grow {
+  0% { clip-path: inset(0 100% 0 0); transform: scaleY(.3); opacity: 1; }
+  60% { clip-path: inset(0 0 0 0); transform: scaleY(1); }
+  85% { clip-path: inset(0 0 0 0); transform: scaleY(1); opacity: 1; }
+  100% { clip-path: inset(0 0 0 0); transform: scaleY(1); opacity: 0; }
+}
+.chart-grow { transform-origin: bottom; animation: chart-grow 5s ease-in-out infinite both; }
+@keyframes review-slide { 0% { opacity: 0; transform: translateY(16px); } 10%, 78% { opacity: 1; transform: none; } 90%, 100% { opacity: 0; transform: translateY(-8px); } }
+.review-slide { animation: review-slide 6s ease infinite both; }
+@keyframes star-pop { 0%, 8% { opacity: 0; transform: scale(.4); } 16%, 78% { opacity: 1; transform: none; } 90%, 100% { opacity: 0; transform: scale(.4); } }
+.star-pop { display: inline-block; animation: star-pop 6s ease infinite both; }
+@media (prefers-reduced-motion: reduce) { .bar-grow, .tip-pop, .chart-grow, .review-slide, .star-pop { animation: none; } }
+
+/* Index hero headline: words rise in, one after another */
+@keyframes hero-rise { from { opacity: 0; transform: translateY(18px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+.hero-rise { display: inline-block; animation: hero-rise .8s cubic-bezier(.2,.7,.2,1) both; }
+.hero-fade { animation: hero-rise .9s .5s cubic-bezier(.2,.7,.2,1) both; }
+@media (prefers-reduced-motion: reduce) { .hero-rise, .hero-fade { animation: none; } }
