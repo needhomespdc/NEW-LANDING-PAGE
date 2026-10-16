@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://needhomespdc.com/sitemap.xml

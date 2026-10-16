@@ -31,7 +31,7 @@ export default function About() {
         {[['icon-vision', 'Our Vision', "To become Africa's trusted real estate investment platform, making property ownership and wealth creation accessible to everyone"],
           ['icon-mission', 'Our Mission', 'To provide accessible and affordable property investment opportunities to everyone by leveraging technology, market expertise, and transparent processes.']].map(([img, t, d]) => (
           <div key={t} className="flex items-start gap-4 rounded-2xl bg-white p-6 shadow-[0_8px_30px_rgba(42,18,4,.08)]">
-            <img src={`/images/${img}.webp`} alt="" className="size-20 shrink-0 object-contain" />
+            <img loading="lazy" decoding="async" src={`/images/${img}.webp`} alt="" className="size-20 shrink-0 object-contain" />
             <div><h2 className="text-xl font-semibold">{t}</h2><p className="mt-1 text-sm text-muted">{d}</p></div>
           </div>
         ))}

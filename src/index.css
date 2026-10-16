@@ -39,3 +39,7 @@ body { font-family: var(--font-sans); color: var(--color-ink); background: #fff;
 .hero-rise { display: inline-block; animation: hero-rise .8s cubic-bezier(.2,.7,.2,1) both; }
 .hero-fade { animation: hero-rise .9s .5s cubic-bezier(.2,.7,.2,1) both; }
 @media (prefers-reduced-motion: reduce) { .hero-rise, .hero-fade { animation: none; } }
+
+/* Visible keyboard focus everywhere */
+:focus-visible { outline: 2px solid #EF6A1B; outline-offset: 3px; border-radius: 4px; }
+input:focus-visible, textarea:focus-visible { outline: none; }

@@ -24,7 +24,7 @@ export default function AgentPartner() {
             <ul className="space-y-4 text-sm text-muted">{perks.map(p => <li key={p} className="flex items-center gap-4"><span className="size-2.5 shrink-0 bg-primary" />{p}</li>)}</ul>
             <p className="mt-6 max-w-sm text-sm text-muted">You bring the connections. We provide the platform. Together, we create more opportunities.</p>
           </div>
-          <img src="/images/agent-open-house.webp" alt="Agents showing a couple around an open house" className="w-full rounded-2xl object-cover" />
+          <img loading="lazy" decoding="async" src="/images/agent-open-house.webp" alt="Agents showing a couple around an open house" className="w-full rounded-2xl object-cover" />
         </div>
       </section>
       <Steps numbered title={['Simple Steps to', 'Own Your Home']} steps={steps} />

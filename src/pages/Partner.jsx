@@ -33,7 +33,7 @@ export default function Partner() {
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {why.map(([img, t, d]) => (
             <div key={t} className="rounded-xl bg-white p-6 shadow-[0_8px_30px_rgba(42,18,4,.08)]">
-              <img src={`/images/${img}.webp`} alt="" className="size-14" />
+              <img loading="lazy" decoding="async" src={`/images/${img}.webp`} alt="" className="size-14" />
               <h3 className="mt-6 text-xl font-semibold">{t}</h3><p className="mt-2 text-sm text-muted">{d}</p>
             </div>
           ))}
@@ -60,7 +60,7 @@ export default function Partner() {
           <ul className="space-y-4 text-sm text-muted">
             {perks.map(p => <li key={p} className="flex items-center gap-4"><span className="size-2.5 shrink-0 bg-primary" />{p}</li>)}
           </ul>
-          <img src="/images/partner-handshake.webp" alt="A developer and a NeedHomes representative shaking hands on a building site" className="w-full rounded-2xl object-cover" />
+          <img loading="lazy" decoding="async" src="/images/partner-handshake.webp" alt="A developer and a NeedHomes representative shaking hands on a building site" className="w-full rounded-2xl object-cover" />
         </div>
       </section>
 

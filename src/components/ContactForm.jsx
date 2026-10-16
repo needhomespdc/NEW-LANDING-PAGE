@@ -12,10 +12,10 @@ export default function ContactForm({ title, intro, button, id }) {
       <h2 className="text-3xl font-medium md:text-[32px]">{title}</h2>
       {intro && <p className="mt-3 text-sm text-muted">{intro}</p>}
       <div className="mt-5 grid gap-x-4 gap-y-5 sm:grid-cols-2">
-        <label className={label}>First name<Req /><input required name="first" className={field} /></label>
-        <label className={label}>Last name<Req /><input required name="last" className={field} /></label>
-        <label className={label}>Telephone no<Req /><input required type="tel" name="tel" className={field} /></label>
-        <label className={label}>Email address<Req /><input required type="email" name="email" className={field} /></label>
+        <label className={label}>First name<Req /><input required name="first" autoComplete="given-name" className={field} /></label>
+        <label className={label}>Last name<Req /><input required name="last" autoComplete="family-name" className={field} /></label>
+        <label className={label}>Telephone no<Req /><input required type="tel" name="tel" autoComplete="tel" className={field} /></label>
+        <label className={label}>Email address<Req /><input required type="email" name="email" autoComplete="email" className={field} /></label>
         <label className={`${label} sm:col-span-2`}>Your message<textarea name="message" rows={7} className={`${field} resize-none`} /></label>
       </div>
       <p className="mt-5 text-sm text-muted">By providing your name, phone number and email you consent to NeedHomes Property Investment Limited's use of your personal data in accordance with the <a href="/privacy" className="text-primary">Privacy Policy</a>.</p>

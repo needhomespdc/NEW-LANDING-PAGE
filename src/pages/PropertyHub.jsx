@@ -14,7 +14,7 @@ function Card({ p }) {
   return (
     <Link to={`/property-hub/${p.slug}`} className="block rounded-2xl bg-[#F1F4F8] p-2.5 transition-shadow hover:shadow-lg">
       <div className="relative overflow-hidden rounded-xl">
-        <img src={`/images/${p.img}.webp`} alt={p.name} className="aspect-[4/3] w-full object-cover" />
+        <img loading="lazy" decoding="async" src={`/images/${p.img}.webp`} alt={p.name} className="aspect-[4/3] w-full object-cover" />
         <div className="absolute left-3 top-3 flex gap-2">
           <span className={`rounded-md px-2.5 py-1 text-sm ${badge[p.type]}`}>{p.type}</span>
           {p.isNew && <span className="rounded-md bg-primary px-2.5 py-1 text-sm text-white">NEW</span>}

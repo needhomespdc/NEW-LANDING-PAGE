@@ -21,7 +21,7 @@ function Col({ title, links }) {
 export default function Footer() {
   return (
     <footer className="relative overflow-hidden bg-[#0b0604] pb-10 pt-20 text-white">
-      <img src="/images/footer-skyline.webp" alt="" className="pointer-events-none absolute bottom-0 left-1/2 w-[1440px] max-w-none -translate-x-1/2 opacity-40" />
+      <img loading="lazy" decoding="async" src="/images/footer-skyline.webp" alt="" className="pointer-events-none absolute bottom-0 left-1/2 w-[1440px] max-w-none -translate-x-1/2 opacity-40" />
       <div className="page-x relative">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>

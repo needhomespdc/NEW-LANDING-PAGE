@@ -9,7 +9,7 @@ function Item({ item }) {
   if (!item.children) return <NavLink to={item.to} className={base}>{item.label}</NavLink>
   return (
     <div className="group relative">
-      <button className={`${base} inline-flex items-center gap-1`} aria-haspopup="menu">
+      <button className={`${base} inline-flex items-center gap-1`}>
         {item.label}<ChevronDown size={16} className="transition-transform group-hover:rotate-180 group-focus-within:rotate-180" />
       </button>
       <div className="invisible absolute left-0 top-full z-30 min-w-52 pt-2 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
@@ -26,7 +26,7 @@ function Item({ item }) {
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   return (
-    <nav className="relative z-20 flex items-start justify-between">
+    <nav aria-label="Main" onKeyDown={e => e.key === 'Escape' && setOpen(false)} className="relative z-20 flex items-start justify-between">
       <Link to="/" className="rounded-br-[28px] bg-white px-7 pb-4 pt-5 md:px-10" aria-label="NeedHomes home"><Logo /></Link>
       <div className="hidden flex-1 items-center justify-between pl-4 pr-8 pt-6 lg:flex">
         <div className="flex items-center gap-1">{navLinks.map(i => <Item key={i.label} item={i} />)}</div>

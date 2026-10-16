@@ -8,11 +8,11 @@ export default function Hero({ tag, title, text, ctas = true, primaryLabel = 'St
         <img src="/images/hero-bg.webp" alt="" className="absolute inset-0 h-full w-full object-cover opacity-20 mix-blend-soft-light" />
         <div className="relative pb-12 md:pb-14">
           <Navbar />
-          <div className={`mt-10 grid gap-6 px-6 md:mt-16 md:px-[48px] ${big ? 'lg:grid-cols-[1.5fr_1fr]' : 'lg:grid-cols-2'} lg:items-end`}>
+          <div className={`mt-10 grid gap-6 px-6 md:mt-16 md:px-[48px] ${big ? 'lg:grid-cols-[1.9fr_1fr]' : 'lg:grid-cols-2'} lg:items-end`}>
             <div>
               {tag && <span className="inline-block rounded-full border border-white/60 px-3 py-1 text-xs text-white">{tag}</span>}
               {badge && <span className="ml-2 inline-block rounded-full bg-primary px-3 py-1 text-xs text-white">{badge}</span>}
-              <h1 className={`mt-4 font-semibold leading-[1.08] tracking-tight text-white ${big ? 'max-w-[760px] text-[42px] md:text-[60px]' : 'max-w-[560px] text-[34px] md:text-[44px]'}`}>
+              <h1 className={`mt-4 font-semibold leading-[1.08] tracking-tight text-white ${big ? 'max-w-[880px] text-[42px] md:text-[60px]' : 'max-w-[560px] text-[34px] md:text-[44px]'}`}>
                 {animate ? title.split(' ').map((w, i) => <span key={i} className="hero-rise mr-[0.25em]" style={{ animationDelay: `${0.1 + i * 0.09}s` }}>{w}</span>) : title}<span className="text-primary">{accent}</span>
               </h1>
             </div>

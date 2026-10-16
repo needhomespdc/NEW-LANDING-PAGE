@@ -34,7 +34,7 @@ export function Steps({ title, steps, numbered = false }) {
         </ol>
         <div className="mx-auto w-full max-w-[560px] overflow-hidden rounded-[32px] bg-primary-50 px-12 pt-12 sm:px-20">
           <div className="relative aspect-[858/1050]">
-            {steps.map((s, i) => <img key={s.title} src={`/images/${s.img || 'phone-property-hub'}.webp`} alt={`${s.title} screen`} aria-hidden={i !== active}
+            {steps.map((s, i) => <img loading="lazy" decoding="async" key={s.title} src={`/images/${s.img || 'phone-property-hub'}.webp`} alt={`${s.title} screen`} aria-hidden={i !== active}
               className={`absolute inset-0 h-full w-full object-contain ${s.plain ? 'object-bottom mix-blend-multiply' : 'object-top'} transition-opacity duration-300 ${i === active ? 'opacity-100' : 'opacity-0'}`} />)}
           </div>
         </div>
@@ -93,7 +93,7 @@ export default function InvestmentPage({ c }) {
       )}
 
       <section className="grid items-center gap-12 pb-20 page-x lg:grid-cols-2">
-        <img src={`/images/${k.img}.webp`} alt={k.alt} className="w-full rounded-[28px] object-cover lg:max-h-[520px]" />
+        <img loading="lazy" decoding="async" src={`/images/${k.img}.webp`} alt={k.alt} className="w-full rounded-[28px] object-cover lg:max-h-[520px]" />
         <div>
           <span className="inline-block rounded-full bg-primary-50 px-3 py-1.5 text-sm text-primary">{k.tag}</span>
           <Head a={k.heading[0]} b={k.heading[1]} className="mt-5" />

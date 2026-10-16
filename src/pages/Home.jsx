@@ -43,11 +43,11 @@ function Slider() {
     <div className="relative mt-10">
       <button onClick={() => go(-1)} aria-label="Previous properties" className={`${arrow} -left-5`}><ChevronLeft /></button>
       <button onClick={() => go(1)} aria-label="Next properties" className={`${arrow} -right-5`}><ChevronRight /></button>
-      <div ref={ref} role="region" aria-label="Featured properties" tabIndex={0} className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div ref={ref} role="region" aria-label="Featured properties (use left and right arrow keys to scroll)" tabIndex={0} onKeyDown={e => { if (e.key === 'ArrowRight') go(1); if (e.key === 'ArrowLeft') go(-1) }} className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {featured.map(p => (
           <Link key={p.slug} to={`/property-hub/${p.slug}`} className="w-[290px] shrink-0 snap-start rounded-2xl bg-[#F1F4F8] p-2.5 transition-shadow hover:shadow-lg md:w-[320px]">
             <div className="relative overflow-hidden rounded-xl">
-              <img src={`/images/${p.img}.webp`} alt={p.name} className="aspect-[4/3] w-full object-cover" draggable="false" />
+              <img loading="lazy" decoding="async" src={`/images/${p.img}.webp`} alt={p.name} className="aspect-[4/3] w-full object-cover" draggable="false" />
               <span className={`absolute left-3 top-3 rounded-md px-2.5 py-1 text-sm ${badge[p.type]}`}>{p.type}</span>
             </div>
             <div className="px-1.5 pb-1.5 pt-4">
@@ -146,7 +146,7 @@ export default function Home() {
         <div className="mt-10 flex flex-wrap justify-center gap-5">
           {ways.map(([img, t, d, to]) => (
             <Link key={t} to={to} className="w-full rounded-2xl bg-[#F1F4F8] p-6 transition hover:-translate-y-1 hover:shadow-lg sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]">
-              <img src={`/images/${img}.webp`} alt="" className="h-40 w-full object-contain" />
+              <img loading="lazy" decoding="async" src={`/images/${img}.webp`} alt="" className="h-40 w-full object-contain" />
               <h3 className="mt-4 text-xl font-semibold">{t}</h3>
               <p className="mt-1 text-sm text-muted">{d}</p>
               <span className="mt-3 inline-flex items-center gap-1 text-sm text-primary">Learn More <ArrowRight size={14} /></span>
@@ -156,7 +156,7 @@ export default function Home() {
       </section>
 
       <section className="grid items-center gap-12 bg-[#F5F7FA] py-20 page-x lg:grid-cols-2">
-        <div className="overflow-hidden rounded-[28px] bg-primary-50"><img src="/images/signup-phone-woman.webp" alt="Woman celebrating beside the NeedHomes app dashboard" className="w-full" /></div>
+        <div className="overflow-hidden rounded-[28px] bg-primary-50"><img loading="lazy" decoding="async" src="/images/signup-phone-woman.webp" alt="Woman celebrating beside the NeedHomes app dashboard" className="w-full" /></div>
         <div>
           <Tag>How It Works</Tag>
           <h2 className="mt-4 text-4xl font-semibold leading-tight md:text-5xl">From signup to<br /><span className="text-muted">property ownership</span></h2>
@@ -197,7 +197,7 @@ export default function Home() {
             <div key={i} className="flex flex-wrap justify-center gap-4">
               {row.map(([name, img, dark]) => (
                 <div key={name} className={`grid h-24 w-[calc(50%-8px)] place-items-center rounded-xl px-5 md:w-[240px] ${dark ? 'bg-[#262626]' : 'bg-white'}`}>
-                  {img ? <img src={`/images/${img}.webp`} alt={name} className="max-h-16 w-auto max-w-full object-contain" />
+                  {img ? <img loading="lazy" decoding="async" src={`/images/${img}.webp`} alt={name} className="max-h-16 w-auto max-w-full object-contain" />
                     : <span className="text-xl font-bold tracking-tight text-[#8A1B6F]">{name.toUpperCase()}</span>}
                 </div>
               ))}

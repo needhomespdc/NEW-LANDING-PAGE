@@ -7,7 +7,7 @@ export default function Faq() {
     <>
       <Hero title="FAQs" text="Have a question about a property, investment options or your Needhomes account? Our team is ready to assist you." />
       <section className="py-20 page-x">
-        <h1 className="mb-12 text-4xl font-semibold md:text-5xl">Frequently Asked <span className="text-muted">Questions (FAQ)</span></h1>
+        <h2 className="mb-12 text-4xl font-semibold md:text-5xl">Frequently Asked <span className="text-muted">Questions (FAQ)</span></h2>
         <FaqList />
       </section>
       <CtaBand title="Ready to Start your" accent="Investment Journey" text="Join investors building wealth the smart way." />

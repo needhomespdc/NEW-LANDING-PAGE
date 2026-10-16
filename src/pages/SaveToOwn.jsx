@@ -62,7 +62,7 @@ function Steps() {
         <div className="mx-auto w-full max-w-[560px] overflow-hidden rounded-[32px] bg-primary-50 px-12 pt-12 sm:px-20">
           <div className="relative aspect-[858/1050]">
             {steps.map((s, i) => (
-              <img key={s.img} src={`/images/${s.img}.webp`} alt={s.alt} aria-hidden={i !== active}
+              <img loading="lazy" decoding="async" key={s.img} src={`/images/${s.img}.webp`} alt={s.alt} aria-hidden={i !== active}
                 className={`absolute inset-0 h-full w-full object-contain object-top transition-opacity duration-300 ${i === active ? 'opacity-100' : 'opacity-0'}`} />
             ))}
           </div>
@@ -99,7 +99,7 @@ export default function SaveToOwn() {
 
       <section className="grid items-center gap-12 py-20 page-x lg:grid-cols-2">
         <div className="overflow-hidden rounded-[32px] bg-primary-50 px-16 pt-12 sm:px-28">
-          <img src="/images/phone-exit-details.webp" alt="Exit Details screen showing an approved exit request" className="w-full" />
+          <img loading="lazy" decoding="async" src="/images/phone-exit-details.webp" alt="Exit Details screen showing an approved exit request" className="w-full" />
         </div>
         <div>
           <Pill>Exit</Pill>
@@ -120,7 +120,7 @@ export default function SaveToOwn() {
           </ul>
           <Link to="/property-hub" className="mt-8 inline-block rounded-xl bg-primary px-6 py-3 text-[15px] font-medium text-white">Start Saving to own</Link>
         </div>
-        <img src="/images/save-to-own-hero-woman.webp" alt="Woman imagining her future home beside the Save to Own app" className="w-full rounded-[28px] object-cover" />
+        <img loading="lazy" decoding="async" src="/images/save-to-own-hero-woman.webp" alt="Woman imagining her future home beside the Save to Own app" className="w-full rounded-[28px] object-cover" />
       </section>
 
       <CtaBand title="Ready to Start Saving" accent="Towards Ownership?" text="Join buyers who chose full ownership with verified properties and a clear path to possession" />

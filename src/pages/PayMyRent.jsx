@@ -29,7 +29,7 @@ export default function PayMyRent() {
             <p>Instead of struggling to raise your full annual rent at once, you can plan ahead, build a consistent savings history, and work towards having your rent covered when it is due.</p>
           </div>
         </div>
-        <img src="/images/pay-my-rent-hero.webp" alt="Man celebrating after paying his rent from his phone" className="w-full rounded-2xl object-cover" />
+        <img loading="lazy" decoding="async" src="/images/pay-my-rent-hero.webp" alt="Man celebrating after paying his rent from his phone" className="w-full rounded-2xl object-cover" />
       </section>
       <section className="pb-20 page-x">
         <h2 className="text-5xl font-semibold">How it Works</h2>
@@ -37,7 +37,7 @@ export default function PayMyRent() {
           {steps.map((s, i) => (
             <li key={s.title} className="py-7">
               <div className="flex items-center gap-4">
-                {s.icon ? <img src={`/images/${s.icon}.webp`} alt="" className="size-20" />
+                {s.icon ? <img loading="lazy" decoding="async" src={`/images/${s.icon}.webp`} alt="" className="size-20" />
                   : <span aria-hidden className="grid size-16 place-items-center rounded-full bg-primary-50 text-2xl font-semibold text-primary">{i + 1}</span>}
                 <h3 className="text-2xl font-medium">{s.title}</h3>
               </div>
