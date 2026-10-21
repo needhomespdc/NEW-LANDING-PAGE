@@ -1,11 +1,15 @@
-import { useState } from 'react'
+'use client'
+import { useEffect, useRef, useState } from 'react'
 
 // Drop logo-dark.svg (nav) and logo-light.svg (footer) into /public/images and they are picked up automatically.
 // Until the files exist, a text wordmark is shown instead.
 export default function Logo({ light = false }) {
   const [missing, setMissing] = useState(false)
+  const ref = useRef(null)
+  // The image can fail before React has hydrated, so also check it once on mount.
+  useEffect(() => { const i = ref.current; if (i && i.complete && i.naturalWidth === 0) setMissing(true) }, [])
   if (!missing) {
-    return <img src={`/images/${light ? 'logo-light' : 'logo-dark'}.svg`} alt="NeedHomes" onError={() => setMissing(true)} className="h-12 w-auto" />
+    return <img ref={ref} src={`/images/${light ? 'logo-light' : 'logo-dark'}.svg`} alt="NeedHomes" onError={() => setMissing(true)} className="h-12 w-auto" />
   }
   return (
     <span className={`inline-flex flex-col items-center leading-none ${light ? 'text-white' : 'text-ink'}`}>

@@ -1,3 +1,4 @@
+'use client'
 import Hero from './Hero.jsx'
 import CtaBand from './CtaBand.jsx'
 

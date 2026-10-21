@@ -1,12 +1,14 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+'use client'
+import { useEffect, useState } from 'react'
+import { Link } from '@/lib/router'
 
 const KEY = 'nh-cookie-consent'
 // Use this before loading any analytics or marketing scripts: only run them when it returns 'accepted'.
 export const getCookieConsent = () => { try { return localStorage.getItem(KEY) } catch { return null } }
 
 export default function CookieNotice() {
-  const [show, setShow] = useState(() => getCookieConsent() === null)
+  const [show, setShow] = useState(false)
+  useEffect(() => { if (getCookieConsent() === null) setShow(true) }, [])
   if (!show) return null
   const choose = v => { try { localStorage.setItem(KEY, v) } catch { /* storage unavailable */ } setShow(false) }
   return (

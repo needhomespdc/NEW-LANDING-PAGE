@@ -1,6 +1,10 @@
 node_modules
+.next
 dist
-.DS_Store
+.next-dev.*.log
 .env
 .env.*
+!.env.example
+.DS_Store
 .vercel
+Needhomes-API-Doc.postman_collection.json

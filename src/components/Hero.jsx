@@ -1,13 +1,14 @@
-import { Link } from 'react-router-dom'
+'use client'
+import { Link } from '@/lib/router'
 import Navbar from './Navbar.jsx'
 
 export default function Hero({ tag, title, text, ctas = true, primaryLabel = 'Start Investing', primaryTo = '/investment/save-to-own', accent = '.', badge, tone, big, animate, children }) {
   return (
     <header className="px-4 pt-4 md:px-[66px]">
-      <div className={`relative overflow-hidden rounded-[32px] md:rounded-[40px] ${tone === 'orange' ? 'bg-gradient-to-br from-[#F27B2C] via-[#E8661A] to-[#C24D0B]' : 'bg-[#1b1512]'}`}>
+      <Navbar tone={tone} />
+      <div className={`relative isolate overflow-hidden rounded-[32px] md:rounded-[40px] ${tone === 'orange' ? 'bg-gradient-to-br from-[#F27B2C] via-[#E8661A] to-[#C24D0B]' : 'bg-[#1b1512]'}`}>
         <img src="/images/hero-bg.webp" alt="" className="absolute inset-0 h-full w-full object-cover opacity-20 mix-blend-soft-light" />
-        <div className="relative pb-12 md:pb-14">
-          <Navbar />
+        <div className="relative pb-12 pt-[76px] md:pb-14 md:pt-[84px]">
           <div className={`mt-10 grid gap-6 px-6 md:mt-16 md:px-[48px] ${big ? 'lg:grid-cols-[1.9fr_1fr]' : 'lg:grid-cols-2'} lg:items-end`}>
             <div>
               {tag && <span className="inline-block rounded-full border border-white/60 px-3 py-1 text-xs text-white">{tag}</span>}

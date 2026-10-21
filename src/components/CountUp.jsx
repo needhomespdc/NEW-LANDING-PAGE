@@ -1,18 +1,20 @@
+'use client'
 import { useEffect, useRef, useState } from 'react'
 
 // Counts a figure like "1,250+", "₦2.4B+" or "18.7%" up from 0 the first time it scrolls into view.
+// The server renders the final number, so it is correct for search engines and when JavaScript is off.
 export default function CountUp({ value, duration = 1800 }) {
   const [, pre = '', num = '0', post = ''] = value.match(/^([^\d]*)([\d,]*\.?\d+)(.*)$/) || []
   const target = parseFloat(num.replace(/,/g, ''))
   const decimals = (num.split('.')[1] || '').length
   const fmt = n => n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
-  const reduce = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const [n, setN] = useState(reduce ? target : 0)
+  const [n, setN] = useState(target)
   const ref = useRef(null)
 
   useEffect(() => {
-    if (reduce) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     let raf
+    setN(0)
     const io = new IntersectionObserver(([e]) => {
       if (!e.isIntersecting) return
       io.disconnect()
@@ -26,7 +28,7 @@ export default function CountUp({ value, duration = 1800 }) {
     }, { threshold: 0.4 })
     io.observe(ref.current)
     return () => { io.disconnect(); cancelAnimationFrame(raf) }
-  }, [target, duration, reduce])
+  }, [target, duration])
 
   return (
     <span ref={ref} className="tabular-nums">

@@ -1,12 +1,15 @@
-import { Link } from 'react-router-dom'
-import { Phone, Mail, ArrowUp, Facebook, Instagram, Linkedin, Youtube, Twitter, MessageCircle, Music2 } from 'lucide-react'
+'use client'
+import { Link } from '@/lib/router'
+import { Phone, Mail, ArrowUp, MessageCircle, Music2 } from 'lucide-react'
+import { XLogo, Facebook, Instagram, Linkedin, Youtube } from './SocialIcons.jsx'
 import Logo from './Logo.jsx'
+import StoreBadges from './StoreBadges.jsx'
 import { investmentLinks } from '../nav.js'
 import { links, ext } from '../links.js'
 
 const company = [['About us', '/about'], ['Partner', '/partner'], ['Property Hub', '/property-hub'], ['Contact Us', '/contact']]
 const privacy = [['Privacy policy', '/privacy'], ['Terms and condition', '/terms'], ['FAQ', '/faq'], ['Deactivate Account', '/account-deactivation'], ['Request Data Deletion', '/data-deletion']]
-const socials = [[Twitter, 'X', 'x'], [Facebook, 'Facebook', 'facebook'], [Instagram, 'Instagram', 'instagram'], [Linkedin, 'LinkedIn', 'linkedin'], [Youtube, 'YouTube', 'youtube'], [Music2, 'TikTok', 'tiktok'], [MessageCircle, 'WhatsApp', 'whatsapp']]
+const socials = [[XLogo, 'X', 'x'], [Facebook, 'Facebook', 'facebook'], [Instagram, 'Instagram', 'instagram'], [Linkedin, 'LinkedIn', 'linkedin'], [Youtube, 'YouTube', 'youtube'], [Music2, 'TikTok', 'tiktok'], [MessageCircle, 'WhatsApp', 'whatsapp']]
 
 function Col({ title, links }) {
   return (
@@ -30,10 +33,7 @@ export default function Footer() {
             <p className="mt-6 flex items-center gap-3"><Phone size={18} />+234 702 500 5857</p>
             <p className="mt-4 flex items-center gap-3"><Mail size={18} />support@needhomespdc.com</p>
             <p className="mt-8 text-sm text-white/85">Join the 1250+ investors who signed up today</p>
-            <div className="mt-3 flex gap-3">
-              <a href={links.appStore} {...ext(links.appStore)} className="rounded-lg bg-primary px-4 py-2 text-sm"><span className="block text-[9px] uppercase opacity-80">Download on the</span>App Store</a>
-              <a href={links.playStore} {...ext(links.playStore)} className="rounded-lg bg-white px-4 py-2 text-sm text-ink"><span className="block text-[9px] uppercase opacity-70">Get it on</span>Google Play</a>
-            </div>
+            <StoreBadges />
           </div>
           <Col title="Company" links={company} />
           <Col title="Investment" links={investmentLinks.map(l => [l.label, l.to])} />

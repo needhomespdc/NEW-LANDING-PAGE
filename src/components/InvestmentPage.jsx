@@ -1,5 +1,6 @@
+'use client'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from '@/lib/router'
 import { Sparkles } from 'lucide-react'
 import Naira from './NairaIcon.jsx'
 import Hero from './Hero.jsx'

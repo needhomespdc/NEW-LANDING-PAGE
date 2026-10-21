@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom'
+'use client'
+import { Link } from '@/lib/router'
 export default function CtaBand({ title, accent, text, primaryLabel = 'Start Investing', primaryTo = '/investment/save-to-own', single = false }) {
   return (
     <section className="bg-mist py-20 text-center page-x">

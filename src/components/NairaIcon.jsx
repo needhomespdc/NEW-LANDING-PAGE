@@ -1,3 +1,4 @@
+'use client'
 // Naira sign (₦) icon, drawn in the same style as the lucide icons.
 export default function Naira({ size = 16, className = '' }) {
   return (
