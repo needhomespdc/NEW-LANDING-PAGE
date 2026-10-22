@@ -24,9 +24,21 @@ export async function POST(request, { params }) {
   if (body.website) return NextResponse.json({ ok: true }) // hidden honeypot field: bots fill it, people do not
 
   const data = {}
-  for (const [k, v] of Object.entries(body)) if (k !== 'website' && typeof v === 'string') data[k] = v.trim().slice(0, 5000)
+  for (const [k, v] of Object.entries(body)) {
+    if (k === 'website') continue
+    if (typeof v === 'string') data[k] = v.trim().slice(0, 5000)
+    else if (typeof v === 'boolean') data[k] = v
+  }
+  // FormData serializes a checked checkbox as "on"; APIs generally expect a boolean.
+  if ('confirm' in data) data.confirm = data.confirm === true || data.confirm === 'on' || data.confirm === 'true'
   if (cfg.required.some(k => !data[k])) return fail('Please fill in all required fields.', 400)
   if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) return fail('Please enter a valid email address.', 400)
+
+  // Translate the website's field names to each endpoint's strict DTO and
+  // omit UI-only values (for example, the waitlist trigger).
+  const payload = Object.fromEntries(
+    Object.entries(cfg.fields).flatMap(([source, target]) => source in data ? [[target, data[source]]] : []),
+  )
 
   const endpoint = process.env[cfg.env]
   if (!endpoint) {
@@ -37,10 +49,28 @@ export async function POST(request, { params }) {
     const res = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', ...(process.env.FORM_API_KEY && { Authorization: `Bearer ${process.env.FORM_API_KEY}` }) },
-      body: JSON.stringify({ form, ...data, submittedAt: new Date().toISOString(), source: 'needhomespdc.com' }),
+      // Send only fields collected by the form. Undocumented metadata can make a
+      // strict API validator reject an otherwise valid submission.
+      body: JSON.stringify(payload),
       signal: AbortSignal.timeout(10_000),
     })
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    if (!res.ok) {
+      const responseBody = await res.text()
+      let apiMessage = ''
+      try {
+        const parsed = JSON.parse(responseBody)
+        apiMessage = Array.isArray(parsed.message) ? parsed.message.join(' ') : parsed.message || parsed.error || ''
+      } catch {
+        apiMessage = responseBody
+      }
+      apiMessage = String(apiMessage).replace(/\s+/g, ' ').trim().slice(0, 500)
+      console.error(`Form "${form}" API returned HTTP ${res.status}${apiMessage ? `: ${apiMessage}` : ''}`)
+
+      if (res.status === 404) return fail('This form endpoint was not found. Please check its URL.', 502)
+      if (res.status === 401 || res.status === 403) return fail('This form endpoint rejected its API credentials.', 502)
+      if (res.status === 400 || res.status === 422) return fail(apiMessage || 'The API rejected the submitted form fields.', 422)
+      return fail('The form service could not accept your request. Please try again.', 502)
+    }
     return NextResponse.json({ ok: true })
   } catch (e) {
     console.error(`Form "${form}" failed:`, e.message)

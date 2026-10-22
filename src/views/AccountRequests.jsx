@@ -5,6 +5,7 @@ import { Info, Mail } from 'lucide-react'
 import { submitForm } from '@/lib/submitForm'
 import Hero from '../components/Hero.jsx'
 import CtaBand from '../components/CtaBand.jsx'
+import FormSuccessModal from '../components/FormSuccessModal.jsx'
 
 const a = 'text-primary underline-offset-2 hover:underline'
 const Mail_ = () => <a href="mailto:support@needhomespdc.com" className={a}>support@needhomespdc.com</a>
@@ -13,6 +14,7 @@ const label = 'block text-sm uppercase text-muted'
 
 function RequestForm({ kind, intro, confirm, button }) {
   const [status, setStatus] = useState({ state: 'idle', message: '' })
+  const [showSuccess, setShowSuccess] = useState(false)
   async function onSubmit(e) {
     e.preventDefault()
     const el = e.currentTarget
@@ -20,7 +22,8 @@ function RequestForm({ kind, intro, confirm, button }) {
     try {
       await submitForm(kind, Object.fromEntries(new FormData(el)))
       el.reset()
-      setStatus({ state: 'success', message: 'Thanks. Your request has been received and we will follow up at the email provided.' })
+      setStatus({ state: 'idle', message: '' })
+      setShowSuccess(true)
     } catch (err) { setStatus({ state: 'error', message: err.message }) }
   }
   return (
@@ -30,7 +33,6 @@ function RequestForm({ kind, intro, confirm, button }) {
       <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 opacity-0" />
       <div className="mt-4 space-y-5">
         <label className={label}>Full name<span className="text-primary"> *</span><input required name="name" autoComplete="name" className={field} /></label>
-        <label className={label}>Phone number<span className="text-primary"> *</span><input required type="tel" name="tel" autoComplete="tel" className={field} /></label>
         <label className={label}>Account email address<span className="text-primary"> *</span><input required type="email" name="email" autoComplete="email" className={field} /></label>
         <label className={label}>Additional details<textarea name="details" rows={6} className={`${field} resize-none`} /></label>
       </div>
@@ -38,7 +40,13 @@ function RequestForm({ kind, intro, confirm, button }) {
       <p className="mt-4 text-sm text-muted">By providing your name, phone number and email you consent to NeedHomes Property Investment Limited's use of your personal data in accordance with the <Link to="/privacy" className={a}>Privacy Policy</Link>.</p>
       <button disabled={status.state === 'sending'} className="mt-5 rounded-xl bg-primary px-8 py-3.5 font-medium text-white disabled:opacity-60">{status.state === 'sending' ? 'Sending…' : button}</button>
       <p className="mt-5 flex items-center gap-3 text-muted"><Mail size={18} className="text-primary" />Prefer email? Write to support@needhomespdc.com</p>
-      <p role={status.state === 'error' ? 'alert' : 'status'} className={`mt-3 text-sm ${status.state === 'error' ? 'text-red-600' : 'text-primary'}`}>{status.message}</p>
+      {status.state === 'error' && <p role="alert" className="mt-3 text-sm text-red-600">{status.message}</p>}
+      <FormSuccessModal
+        open={showSuccess}
+        onClose={() => setShowSuccess(false)}
+        title="Request received"
+        message="Thanks. Your request has been received and we will follow up at the email provided."
+      />
     </form>
   )
 }
