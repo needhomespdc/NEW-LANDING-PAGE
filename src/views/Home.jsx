@@ -1,5 +1,6 @@
 'use client'
 import { useRef } from 'react'
+import Image from 'next/image'
 import { Link } from '@/lib/router'
 import { CircleUser, ChevronLeft, ChevronRight, MapPin, TrendingUp, Home as HomeIcon, ArrowRight, Mail } from 'lucide-react'
 import Hero from '../components/Hero.jsx'
@@ -53,8 +54,8 @@ function Slider({ properties }) {
       <div ref={ref} role="region" aria-label="Featured properties (use left and right arrow keys to scroll)" tabIndex={0} onKeyDown={e => { if (e.key === 'ArrowRight') go(1); if (e.key === 'ArrowLeft') go(-1) }} className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {featured.map(p => (
           <Link key={p.slug} to={`/property-hub/${p.slug}`} className="w-[290px] shrink-0 snap-start rounded-2xl bg-[#F1F4F8] p-2.5 transition-shadow hover:shadow-lg md:w-[320px]">
-            <div className="relative overflow-hidden rounded-xl">
-              <img loading="lazy" decoding="async" src={imgSrc(p)} alt={p.name} className="aspect-[4/3] w-full object-cover" draggable="false" />
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image src={imgSrc(p)} alt={p.name} fill sizes="(max-width: 768px) 290px, 320px" className="object-cover" draggable="false" />
               <span className={`absolute left-3 top-3 rounded-md px-2.5 py-1 text-sm ${badge[p.type]}`}>{p.type}</span>
             </div>
             <div className="px-1.5 pb-1.5 pt-4">

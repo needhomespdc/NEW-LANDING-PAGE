@@ -20,14 +20,22 @@ const pages = {
 }
 
 export { pages }
+export const DEFAULT_SOCIAL_IMAGE = '/og-image.webp'
+
+export function socialImage(url = DEFAULT_SOCIAL_IMAGE, alt = 'NeedHomes property investment and ownership') {
+  return { url, width: 1200, height: 630, alt }
+}
 
 // Next.js metadata object for a static route.
 export function pageMeta(path) {
   const [title, description] = pages[path]
   const url = SITE + (path === '/' ? '' : path)
   return {
-    title, description, alternates: { canonical: url },
-    openGraph: { title, description, url, siteName: 'NeedHomes', type: 'website', images: [{ url: '/og-image.png', width: 1200, height: 630 }] },
-    twitter: { card: 'summary_large_image' },
+    title,
+    description,
+    alternates: { canonical: url },
+    robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },
+    openGraph: { title, description, url, siteName: 'NeedHomes', locale: 'en_NG', type: 'website', images: [socialImage()] },
+    twitter: { card: 'summary_large_image', title, description, images: [DEFAULT_SOCIAL_IMAGE] },
   }
 }

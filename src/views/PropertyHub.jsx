@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState, useMemo } from 'react'
+import Image from 'next/image'
 import { Heart, MapPin, Search, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Link } from '@/lib/router'
 import { imgSrc, leftLabel } from '../data/properties.js'
@@ -22,8 +23,8 @@ function Card({ p }) {
   const [liked, setLiked] = useState(false)
   return (
     <Link to={`/property-hub/${p.slug}`} className="block rounded-2xl bg-[#F1F4F8] p-2.5 transition-shadow hover:shadow-lg">
-      <div className="relative overflow-hidden rounded-xl">
-        <img loading="lazy" decoding="async" src={imgSrc(p)} alt={p.name} className="aspect-[4/3] w-full object-cover" />
+      <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+        <Image src={imgSrc(p)} alt={p.name} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover" />
         <div className="absolute left-3 top-3 flex gap-2">
           <span className={`rounded-md px-2.5 py-1 text-sm ${badge[p.type]}`}>{p.type}</span>
           {p.isNew && <span className="rounded-md bg-primary px-2.5 py-1 text-sm text-white">NEW</span>}

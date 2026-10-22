@@ -9,7 +9,7 @@
 }
 body { font-family: var(--font-sans); color: var(--color-ink); background: #fff; -webkit-font-smoothing: antialiased; }
 main p { font-size: 18px; }
-main p.text-sm, main p.text-xs, main p.text-\[15px\] { font-size: 18px; }
+main p.text-sm, main p.text-xs, main p.text-\[15px\] { font-size: 17px; }
 main li { font-size: 18px; }
 main li.text-sm, main li.text-xs, main li.text-\[15px\], main li.text-\[17px\] { font-size: 18px; }
 main li .text-sm, main li .text-xs, main li .text-\[15px\], main li .text-\[17px\] { font-size: 18px; }

@@ -1,15 +1,23 @@
 import '@fontsource-variable/inter'
 import './globals.css'
 import AppShell from '@/components/AppShell'
-import { SITE, pages } from '@/lib/seo'
+import { DEFAULT_SOCIAL_IMAGE, SITE, pages, socialImage } from '@/lib/seo'
 
 const [title, description] = pages['/']
 export const metadata = {
   metadataBase: new URL(SITE),
-  title, description,
+  title: { default: title, template: '%s' },
+  description,
+  applicationName: 'NeedHomes',
+  authors: [{ name: 'NeedHomes Property Investment Limited', url: SITE }],
+  creator: 'NeedHomes Property Investment Limited',
+  publisher: 'NeedHomes Property Investment Limited',
+  category: 'Real estate',
+  formatDetection: { email: false, address: false, telephone: false },
   icons: { icon: '/favicon.svg', apple: '/apple-touch-icon.png' },
-  openGraph: { type: 'website', siteName: 'NeedHomes', title, description, url: SITE, images: [{ url: '/og-image.png', width: 1200, height: 630 }] },
-  twitter: { card: 'summary_large_image' },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },
+  openGraph: { type: 'website', siteName: 'NeedHomes', locale: 'en_NG', title, description, url: SITE, images: [socialImage()] },
+  twitter: { card: 'summary_large_image', title, description, images: [DEFAULT_SOCIAL_IMAGE] },
 }
 export const viewport = { themeColor: '#EF6A1B' }
 

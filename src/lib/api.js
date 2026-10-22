@@ -41,6 +41,7 @@ export function mapProperty(r) {
     type,
     loc: tidyLoc(r.location),
     price: naira(r.minInvestment),               // price per slot / plot / unit
+    minInvestment: r.minInvestment ?? null,
     totalPrice: r.totalPrice ? naira(r.totalPrice) : null,
     unit,
     slots,
@@ -54,6 +55,7 @@ export function mapProperty(r) {
     description: r.description ?? '',
     kind: r.propertyKindLabel,
     returnType: r.returnTypeLabel,
+    updatedAt: r.updatedAt ?? r.publishedAt ?? null,
   }
 }
 
