@@ -33,7 +33,7 @@ export default function Partner() {
         </div>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {why.map(([img, t, d]) => (
-            <div key={t} className="rounded-xl bg-white p-6 shadow-[0_8px_30px_rgba(42,18,4,.08)]">
+            <div key={t} className="rounded-xl bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,.08)]">
               <img loading="lazy" decoding="async" src={`/images/${img}.webp`} alt="" className="size-14" />
               <h3 className="mt-6 text-xl font-semibold">{t}</h3><p className="mt-2 text-sm text-muted">{d}</p>
             </div>
@@ -70,7 +70,7 @@ export default function Partner() {
         <p className="mt-3 text-sm text-muted">We've streamlined our partnership onboarding to ensure transparency, efficiency, and mutual success from day one.</p>
         <ol className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {process.map(([t, d], i) => (
-            <li key={t} className="rounded-xl bg-white p-3 shadow-[0_8px_30px_rgba(42,18,4,.08)]">
+            <li key={t} className="rounded-xl bg-white p-3 shadow-[0_8px_30px_rgba(0,0,0,.08)]">
               <span className="block text-center text-7xl font-bold text-[#FDB894]">{String(i + 1).padStart(2, '0')}</span>
               <div className="rounded-lg bg-primary-50 p-4 text-center"><h3 className="text-lg font-semibold">{t}</h3><p className="mt-2 text-xs text-muted">{d}</p></div>
             </li>

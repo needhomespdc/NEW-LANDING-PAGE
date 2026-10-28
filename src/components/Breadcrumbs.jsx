@@ -58,14 +58,11 @@ export default function Breadcrumbs({ currentTitle }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }} />
       <nav aria-label="Breadcrumb" className="px-6 pt-8 md:px-[48px]">
         <ol className="flex flex-wrap items-center gap-1.5 text-sm text-white/80">
-          {crumbs.map((crumb, index) => {
-            const current = index === crumbs.length - 1
+          {crumbs.slice(0, -1).map((crumb, index) => {
             return (
               <li key={crumb.href} className="flex items-center gap-1.5">
                 {index > 0 && <ChevronRight size={14} aria-hidden="true" />}
-                {current
-                  ? <span aria-current="page" className="font-medium text-white">{crumb.name}</span>
-                  : <Link to={crumb.href} className="inline-flex items-center gap-1 hover:text-white">{index === 0 && <Home size={14} aria-hidden="true" />}{crumb.name}</Link>}
+                <Link to={crumb.href} className="inline-flex items-center gap-1 hover:text-white">{index === 0 && <Home size={14} aria-hidden="true" />}{crumb.name}</Link>
               </li>
             )
           })}

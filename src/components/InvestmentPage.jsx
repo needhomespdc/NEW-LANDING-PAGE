@@ -2,12 +2,12 @@
 import { useState } from 'react'
 import { Link } from '@/lib/router'
 import { Sparkles } from 'lucide-react'
-import Naira from './NairaIcon.jsx'
+import BulletIcon from './BulletIcon.jsx'
 import Hero from './Hero.jsx'
 import CtaBand from './CtaBand.jsx'
 
 const Pill = ({ children }) => <span className="inline-flex items-center gap-2 rounded-full border border-ink/15 px-3 py-1.5 text-sm"><Sparkles size={14} />{children}</span>
-const Dot = ({ big }) => <span className={`grid shrink-0 place-items-center rounded-full bg-primary-50 text-primary ${big ? 'size-9' : 'size-7'}`}><Naira size={14} /></span>
+const Dot = ({ big }) => <BulletIcon big={big} />
 const Head = ({ a, b, className = '' }) => <h2 className={`text-4xl font-semibold leading-tight md:text-5xl ${className}`}>{a}{b && <><br className="hidden md:block" /> <span className="text-muted">{b}</span></>}</h2>
 
 export function Steps({ title, steps, numbered = false }) {
@@ -26,7 +26,7 @@ export function Steps({ title, steps, numbered = false }) {
                   className={`flex w-full gap-4 rounded-2xl p-4 text-left transition-colors ${on ? 'bg-white shadow-sm' : 'hover:bg-white/60'}`}>
                   {numbered
                     ? <span className={`w-12 shrink-0 text-2xl font-semibold transition-colors ${on ? 'text-primary' : 'text-[#FDB894]'}`}>{String(i + 1).padStart(2, '0')}</span>
-                    : <span className={`mt-1 grid size-8 shrink-0 place-items-center rounded-full transition-colors ${on ? 'bg-primary text-white' : 'bg-primary-50 text-primary'}`}><Naira size={16} /></span>}
+                    : <BulletIcon big active={on} className="mt-1" />}
                   <span><span className={`block text-2xl font-medium transition-colors ${on ? 'text-primary' : ''}`}>{s.title}</span><span className="mt-1 block max-w-[420px] text-muted">{s.text}</span></span>
                 </button>
               </li>
@@ -93,14 +93,16 @@ export default function InvestmentPage({ c }) {
         </section>
       )}
 
-      <section className="grid items-center gap-12 pb-20 page-x lg:grid-cols-2">
+      <section className="grid items-center gap-12 py-20 page-x lg:grid-cols-2">
         <img loading="lazy" decoding="async" src={`/images/${k.img}.webp`} alt={k.alt} className="w-full rounded-[28px] object-cover lg:max-h-[520px]" />
         <div>
           <span className="inline-block rounded-full bg-primary-50 px-3 py-1.5 text-sm text-primary">{k.tag}</span>
           <Head a={k.heading[0]} b={k.heading[1]} className="mt-5" />
           <div className="mt-5 max-w-[560px] space-y-3 text-muted">{k.text.map(p => <p key={p}>{p}</p>)}</div>
           {k.bullets && <ul className="mt-8 space-y-5">{k.bullets.map(b => <li key={b} className="flex items-center gap-4"><Dot big /><span className="max-w-[460px] text-[17px]">{b}</span></li>)}</ul>}
-          <Link to={k.to || '/property-hub'} className="mt-8 inline-block rounded-xl bg-primary px-6 py-3 text-[15px] font-medium text-white">{k.button}</Link>
+          {k.button.toLowerCase().startsWith('start investing')
+            ? <a href="https://app.needhomespdc.com/" className="mt-8 inline-block rounded-xl bg-primary px-6 py-3 text-[15px] font-medium text-white">{k.button}</a>
+            : <Link to={k.to || '/property-hub'} className="mt-8 inline-block rounded-xl bg-primary px-6 py-3 text-[15px] font-medium text-white">{k.button}</Link>}
         </div>
       </section>
       <CtaBand {...c.cta} />

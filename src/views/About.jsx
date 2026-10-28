@@ -3,6 +3,7 @@ import { Network, TrendingUp, Users } from 'lucide-react'
 import Hero from '../components/Hero.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 import { Link } from '@/lib/router'
+import CountUp from '../components/CountUp.jsx'
 
 const pillars = [
   [Network, 'Flexible Investment Models', 'Fractional ownership, land banking & more'],
@@ -31,7 +32,7 @@ export default function About() {
       <section className="grid gap-6 py-20 page-x md:grid-cols-2">
         {[['icon-vision', 'Our Vision', "To become Africa's trusted real estate investment platform, making property ownership and wealth creation accessible to everyone"],
           ['icon-mission', 'Our Mission', 'To provide accessible and affordable property investment opportunities to everyone by leveraging technology, market expertise, and transparent processes.']].map(([img, t, d]) => (
-          <div key={t} className="flex items-start gap-4 rounded-2xl bg-white p-6 shadow-[0_8px_30px_rgba(42,18,4,.08)]">
+          <div key={t} className="flex items-start gap-4 rounded-2xl bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,.08)]">
             <img loading="lazy" decoding="async" src={`/images/${img}.webp`} alt="" className="size-20 shrink-0 object-contain" />
             <div><h2 className="text-xl font-semibold">{t}</h2><p className="mt-1 text-sm text-muted">{d}</p></div>
           </div>
@@ -54,7 +55,7 @@ export default function About() {
       <section className="pb-20 page-x">
         <dl className="grid gap-8 rounded-2xl border border-ink/10 bg-[#F1F4F8] px-6 py-14 text-center sm:grid-cols-3">
           {stats.map(([n, l]) => (
-            <div key={l}><dd className="text-3xl font-medium">{n}</dd><div className="mx-auto mt-2 h-1.5 w-40 rounded bg-mist" /><dt className="mt-2 text-sm text-muted">{l}</dt></div>
+            <div key={l}><dd className="text-5xl font-semibold tracking-tight text-primary md:text-6xl"><CountUp value={n} /></dd><div className="mx-auto mt-4 h-1.5 w-40 rounded bg-mist" /><dt className="mt-3 text-base text-muted">{l}</dt></div>
           ))}
         </dl>
       </section>

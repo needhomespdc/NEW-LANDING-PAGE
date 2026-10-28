@@ -12,7 +12,7 @@ export default function CookieNotice() {
   if (!show) return null
   const choose = v => { try { localStorage.setItem(KEY, v) } catch { /* storage unavailable */ } setShow(false) }
   return (
-    <section aria-label="Cookie notice" className="fixed inset-x-3 bottom-3 z-50 rounded-2xl bg-[#2A1204] p-5 text-white shadow-2xl md:inset-x-auto md:left-6 md:bottom-6 md:max-w-md">
+    <section aria-label="Cookie notice" className="fixed inset-x-3 bottom-3 z-50 rounded-2xl bg-black p-5 text-white shadow-2xl md:inset-x-auto md:left-6 md:bottom-6 md:max-w-md">
       <p className="text-sm text-white/90">We use cookies and similar technologies to remember your preferences and improve the platform. Read our <Link to="/privacy" className="underline">Privacy Policy</Link> to learn more.</p>
       <div className="mt-4 flex gap-3">
         <button onClick={() => choose('accepted')} className="rounded-lg bg-primary px-5 py-2 text-sm font-medium text-white">Accept</button>

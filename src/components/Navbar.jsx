@@ -25,6 +25,24 @@ function Item({ item }) {
   )
 }
 
+function MobileItem({ item, closeMenu }) {
+  const [expanded, setExpanded] = useState(false)
+  if (!item.children) return <Link to={item.to} onClick={closeMenu} className="block rounded-xl px-3 py-2.5 text-ink hover:bg-primary-50">{item.label}</Link>
+  return (
+    <div>
+      <button type="button" onClick={() => setExpanded(value => !value)} aria-expanded={expanded}
+        className="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-ink hover:bg-primary-50">
+        {item.label}<ChevronDown size={17} className={`transition-transform ${expanded ? 'rotate-180' : ''}`} />
+      </button>
+      {expanded && (
+        <div className="ml-3 border-l border-black/10 pl-2">
+          {item.children.map(child => <Link key={child.label} to={child.to} onClick={closeMenu} className="block rounded-xl px-3 py-2.5 text-sm text-ink hover:bg-primary-50">{child.label}</Link>)}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function Navbar({ tone }) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -37,7 +55,7 @@ export default function Navbar({ tone }) {
   }, [])
   return (
     <nav aria-label="Main" onKeyDown={e => e.key === 'Escape' && setOpen(false)}
-      className={`fixed inset-x-4 top-4 z-[100] flex items-start justify-between rounded-[24px] transition-[background-color,box-shadow] duration-300 md:inset-x-[66px] md:rounded-[28px] ${scrolled || open ? `${tone === 'orange' ? 'bg-[#E8661A]/95' : 'bg-[#1b1512]/95'} shadow-lg backdrop-blur-xl` : 'bg-transparent'}`}>
+      className={`fixed inset-x-4 top-4 z-[100] flex items-start justify-between rounded-[24px] transition-[background-color,box-shadow] duration-300 md:inset-x-[66px] md:rounded-[28px] ${scrolled || open ? `${tone === 'orange' ? 'bg-[#E8661A]/95' : 'bg-black/95'} shadow-lg backdrop-blur-xl` : 'bg-transparent'}`}>
       <Link to="/" className="rounded-br-[28px] bg-white px-7 pb-4 pt-5 md:px-10" aria-label="NeedHomes home"><Logo /></Link>
       <div className="hidden flex-1 items-center justify-between pl-4 pr-8 pt-6 lg:flex">
         <div className="flex items-center gap-1">{navLinks.map(i => <Item key={i.label} item={i} />)}</div>
@@ -48,9 +66,7 @@ export default function Navbar({ tone }) {
       <button className="p-5 text-white lg:hidden" onClick={() => setOpen(!open)} aria-label="Toggle menu" aria-expanded={open}>{open ? <X /> : <Menu />}</button>
       {open && (
         <div className="absolute inset-x-4 top-20 rounded-2xl bg-white p-4 shadow-xl lg:hidden">
-          {navLinks.flatMap(i => i.children ? i.children : [i]).map(l => (
-            <Link key={l.label} to={l.to} onClick={() => setOpen(false)} className="block rounded-xl px-3 py-2.5 text-ink hover:bg-primary-50">{l.label}</Link>
-          ))}
+          {navLinks.map(item => <MobileItem key={item.label} item={item} closeMenu={() => setOpen(false)} />)}
           <button type="button" onClick={() => { setOpen(false); openWaitlist('get-started') }} className="mt-2 w-full rounded-xl bg-primary px-4 py-3 font-medium text-white">Get Started</button>
         </div>
       )}

@@ -1,7 +1,8 @@
 node_modules
 .next
+.next-dev
 dist
-.next-dev.*.log
+*next-dev*.log
 .env
 .env.*
 !.env.example

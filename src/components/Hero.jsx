@@ -3,11 +3,11 @@ import { Link } from '@/lib/router'
 import Navbar from './Navbar.jsx'
 import Breadcrumbs from './Breadcrumbs.jsx'
 
-export default function Hero({ tag, title, text, ctas = true, primaryLabel = 'Start Investing', primaryTo = '/investment/save-to-own', accent = '.', badge, tone, big, animate, children }) {
+export default function Hero({ tag, title, text, ctas = true, primaryLabel = 'Start Investing', primaryTo = 'https://app.needhomespdc.com/', accent = '.', badge, tone, big, animate, children }) {
   return (
     <header className="px-4 pt-4 md:px-[66px]">
       <Navbar tone={tone} />
-      <div className={`relative isolate overflow-hidden rounded-[32px] md:rounded-[40px] ${tone === 'orange' ? 'bg-gradient-to-br from-[#F27B2C] via-[#E8661A] to-[#C24D0B]' : 'bg-[#1b1512]'}`}>
+      <div className={`relative isolate overflow-hidden rounded-[32px] md:rounded-[40px] ${tone === 'orange' ? 'bg-gradient-to-br from-[#F27B2C] via-[#E8661A] to-[#C24D0B]' : 'bg-black'}`}>
         <img src="/images/hero-bg.webp" alt="" className="absolute inset-0 h-full w-full object-cover opacity-20 mix-blend-soft-light" />
         <div className="relative pb-12 pt-[76px] md:pb-14 md:pt-[84px]">
           <Breadcrumbs currentTitle={title} />
@@ -26,6 +26,8 @@ export default function Hero({ tag, title, text, ctas = true, primaryLabel = 'St
             <div className="mx-6 mt-10 flex flex-wrap justify-center gap-3 border-t border-white/20 pt-8 md:mx-[48px]">
               {primaryTo.startsWith('#')
                 ? <a href={primaryTo} className="rounded-xl bg-primary px-8 py-3 text-[15px] font-medium text-white">{primaryLabel}</a>
+                : primaryTo.startsWith('http')
+                  ? <a href={primaryTo} className="rounded-xl bg-primary px-8 py-3 text-[15px] font-medium text-white">{primaryLabel}</a>
                 : <Link to={primaryTo} className="rounded-xl bg-primary px-8 py-3 text-[15px] font-medium text-white">{primaryLabel}</Link>}
               <Link to="/property-hub" className="rounded-xl border border-white/70 px-8 py-3 text-[15px] font-medium text-white">Explore Property Hub</Link>
             </div>

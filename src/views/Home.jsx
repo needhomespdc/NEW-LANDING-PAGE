@@ -5,7 +5,6 @@ import { Link } from '@/lib/router'
 import { CircleUser, ChevronLeft, ChevronRight, MapPin, TrendingUp, Home as HomeIcon, ArrowRight, Mail } from 'lucide-react'
 import Hero from '../components/Hero.jsx'
 import CountUp from '../components/CountUp.jsx'
-import { AppleIcon, PlayIcon } from '../components/StoreBadges.jsx'
 import { useWaitlist } from '../components/WaitlistProvider.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 import FaqList from '../components/FaqList.jsx'
@@ -20,7 +19,7 @@ const Head = ({ a, b, text }) => (
 )
 function AppBtn() {
   const openWaitlist = useWaitlist()
-  return <button type="button" onClick={() => openWaitlist('download-app')} className="inline-flex items-center gap-2 rounded-xl bg-primary px-7 py-3 text-[15px] font-medium text-white">Download App <span className="flex gap-1.5"><AppleIcon className="size-4" /><PlayIcon className="size-4" /></span></button>
+  return <button type="button" onClick={() => openWaitlist('download-app')} className="inline-flex items-center rounded-xl bg-primary px-7 py-3 text-[15px] font-medium text-white">Download App</button>
 }
 
 const bars = [['Jan', 51], ['Feb', 71], ['Mar', 56], ['Apr', 100], ['May', 67], ['Jun', 67]]
@@ -91,7 +90,7 @@ export default function Home({ properties = [], reviews = [], reviewSummary = nu
               <p className="mt-2 max-w-[360px] text-muted">Every property and transaction is verified for your peace of mind.</p>
               <div className="mt-5 space-y-4">
                 {reviews.map(({ name: n, rating, text, url }, i) => (
-                  <div key={n + i} className="review-slide rounded-2xl bg-[#2A1204] p-4 text-white" style={{ animationDelay: `${i * 1.2}s` }}>
+                  <div key={n + i} className="review-slide rounded-2xl bg-black p-4 text-white" style={{ animationDelay: `${i * 1.2}s` }}>
                     <div className="flex items-center justify-between gap-2">
                       <span className="flex items-center gap-2 text-base font-medium"><CircleUser size={22} aria-hidden="true" />{url ? <a href={url} target="_blank" rel="noopener noreferrer" className="hover:underline">{n}</a> : n}</span>
                       <span aria-label={`${rating} out of 5 stars`} className="whitespace-nowrap">
@@ -110,7 +109,7 @@ export default function Home({ properties = [], reviews = [], reviewSummary = nu
               <div className="relative min-h-[300px] flex-1 overflow-hidden rounded-3xl bg-[#F8FAFC] p-6 text-ink">
                 <div className="relative z-10">
                   <p className="text-lg text-muted">Total Portfolio Value</p>
-                  <p className="mt-2 text-5xl font-extrabold tracking-tight text-[#2A1204] md:text-6xl">₦125.4M</p>
+                  <p className="mt-2 text-5xl font-extrabold tracking-tight text-black md:text-6xl">₦125.4M</p>
                   <span className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#D5EDE0] px-4 py-1.5 text-sm text-[#2E8B43]">18.7% this month <span aria-hidden="true">▲</span></span>
                 </div>
                 <div className="chart-grow absolute bottom-0 left-4 h-1/2 w-[calc(100%-2rem)]">
@@ -121,7 +120,7 @@ export default function Home({ properties = [], reviews = [], reviewSummary = nu
                 </svg>
                 </div>
               </div>
-              <button type="button" onClick={() => openWaitlist('download-app')} className="flex items-center justify-center gap-2 rounded-xl bg-[#2A1204] py-3.5 font-medium text-white">Download App <span className="flex gap-1.5"><AppleIcon className="size-4" /><PlayIcon className="size-4" /></span></button>
+              <button type="button" onClick={() => openWaitlist('download-app')} className="flex items-center justify-center rounded-xl bg-black py-3.5 font-medium text-white">Download App</button>
             </div>
 
             <div className="rounded-3xl bg-[#F8FAFC] p-6 text-ink">
@@ -145,11 +144,11 @@ export default function Home({ properties = [], reviews = [], reviewSummary = nu
         </div>
       </Hero>
 
-      <section className="grid gap-4 px-4 pt-4 md:grid-cols-2 md:px-[66px] lg:grid-cols-4">
+      <section className="grid gap-4 bg-black p-4 md:grid-cols-2 md:px-[66px] lg:grid-cols-[2fr_repeat(3,1fr)]">
         {stats.map(([l, v], i) => (
-          <div key={l} className={`rounded-2xl p-8 ${i === 0 ? 'bg-[#2A1204] text-white' : 'bg-[#F1F4F8]'}`}>
-            <p className={`text-sm ${i === 0 ? 'text-white/85' : 'text-muted'}`}>{l}</p>
-            <p className={`mt-3 text-5xl font-semibold ${i === 0 ? '' : 'text-primary'}`}><CountUp value={v} /></p>
+          <div key={l} className={`flex min-h-64 flex-col justify-center rounded-[28px] p-8 md:min-h-72 lg:min-h-[350px] lg:px-10 ${i === 0 ? 'bg-black text-white' : 'bg-[#F4F6F8]'}`}>
+            <p className={`text-lg md:text-xl lg:text-[22px] ${i === 0 ? 'text-white/85' : 'text-ink'}`}>{l}</p>
+            <p className={`mt-5 whitespace-nowrap text-[58px] font-semibold leading-none tracking-tight md:text-[68px] xl:text-[78px] ${i === 0 ? 'text-white' : 'text-primary'}`}><CountUp value={v} /></p>
           </div>
         ))}
       </section>
