@@ -1,4 +1,5 @@
 'use client'
+import Image from 'next/image'
 import { Network, TrendingUp, Users } from 'lucide-react'
 import Hero from '../components/Hero.jsx'
 import CtaBand from '../components/CtaBand.jsx'
@@ -60,16 +61,21 @@ export default function About() {
         </dl>
       </section>
 
-      <section className="pb-24 page-x">
-        <span className="inline-block rounded-full bg-primary-50 px-3 py-1.5 text-sm text-primary">Our Story</span>
-        <h2 className="mt-5 text-5xl font-semibold leading-tight">Property Ownership<br />shouldn't be out of reach</h2>
-        <div className="mt-6 space-y-4 text-muted">
+      <section className="grid items-center gap-10 pb-24 page-x lg:grid-cols-[1.05fr_.95fr]">
+        <div>
+          <span className="inline-block rounded-full bg-primary-50 px-3 py-1.5 text-sm text-primary">Our Story</span>
+          <h2 className="mt-5 text-5xl font-semibold leading-tight">Property Ownership<br />shouldn't be out of reach</h2>
+          <div className="mt-6 space-y-4 text-muted">
           <p>For many people, the desire to own property or build wealth through real estate is real, but high entry costs, rigid payment structures, limited access to trusted opportunities, and complicated processes often make getting started difficult.</p>
           <p>That's the problem NeedHomes was created to solve.</p>
           <p>NeedHomes is a PropTech platform making real estate investment and property ownership more accessible, flexible, and transparent. We use technology to simplify how people discover opportunities, invest, make payments, manage their properties, and track their investments. Through Fractional Ownership, Land Banking, Save-to-Own, Co-Development, and Outright Purchase, we provide different pathways into real estate, allowing people to choose an option that fits their goals and financial capacity.</p>
           <p>At NeedHomes, we're creating a simpler way for more people to start, invest, and move closer to property ownership.</p>
+          </div>
+          <Link to="/property-hub" className="mt-8 inline-block rounded-xl bg-primary px-8 py-3.5 font-medium text-white">PropertyHub</Link>
         </div>
-        <Link to="/property-hub" className="mt-8 inline-block rounded-xl bg-primary px-8 py-3.5 font-medium text-white">PropertyHub</Link>
+        <div className="relative min-h-[420px] overflow-hidden rounded-[28px] bg-[#F1F4F8] lg:min-h-[600px]">
+          <Image src="/images/about-our-story.webp" alt="Modern real estate development representing NeedHomes' story of accessible property ownership" fill sizes="(max-width: 1024px) 100vw, 45vw" className="object-cover" />
+        </div>
       </section>
 
       <CtaBand title="Ready to Own" accent="Your Dream Home?" text="Join buyers who chose full ownership with verified properties and a clear path to possession" />

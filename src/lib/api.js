@@ -56,6 +56,14 @@ export function mapProperty(r) {
     kind: r.propertyKindLabel,
     returnType: r.returnTypeLabel,
     updatedAt: r.updatedAt ?? r.publishedAt ?? null,
+    landSize: r.landSize ?? null,
+    buildingPermitNumber: r.buildingPermitNumber ?? null,
+    developmentStage: r.developmentStageLabel ?? r.developmentStage ?? null,
+    canAcceptInvestments: r.canAcceptInvestments ?? !(/sold/i.test(r.status ?? '') || slots === 0),
+    highlights: Array.isArray(r.highlights) ? r.highlights : [],
+    documents: Array.isArray(r.documents) ? r.documents : [],
+    keyFacts: Array.isArray(r.keyFacts) ? r.keyFacts : [],
+    images: Array.isArray(r.images) ? r.images : [],
   }
 }
 
@@ -100,5 +108,19 @@ export async function getProperties() {
 }
 
 export async function getProperty(slug) {
+  if (BASE) {
+    try {
+      const url = new URL(BASE)
+      url.search = ''
+      url.pathname = `${url.pathname.replace(/\/$/, '')}/by-slug/${encodeURIComponent(slug)}`
+      const res = await fetch(url, { next: { revalidate: REVALIDATE_SECONDS }, headers })
+      if (res.ok) {
+        const body = await res.json()
+        return mapProperty(body.data ?? body)
+      }
+    } catch (e) {
+      console.error(`Could not load property "${slug}" from the detail API:`, e.message)
+    }
+  }
   return (await getProperties()).find(p => p.slug === slug) ?? null
 }

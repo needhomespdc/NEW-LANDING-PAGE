@@ -4,6 +4,8 @@ import { usePathname } from 'next/navigation'
 import Footer from './Footer.jsx'
 import CookieNotice from './CookieNotice.jsx'
 import WaitlistProvider from './WaitlistProvider.jsx'
+import FloatingWhatsApp from './FloatingWhatsApp.jsx'
+import DownloadAppProvider from './DownloadAppProvider.jsx'
 
 const useIsoLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
@@ -27,10 +29,13 @@ export default function AppShell({ children }) {
   }, [pathname])
   return (
     <WaitlistProvider>
-      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-ink focus:shadow-lg">Skip to main content</a>
-      <main id="main" tabIndex={-1} className="outline-none">{children}</main>
-      <Footer />
-      <CookieNotice />
+      <DownloadAppProvider>
+        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-ink focus:shadow-lg">Skip to main content</a>
+        <main id="main" tabIndex={-1} className="outline-none">{children}</main>
+        <Footer />
+        <CookieNotice />
+        <FloatingWhatsApp />
+      </DownloadAppProvider>
     </WaitlistProvider>
   )
 }

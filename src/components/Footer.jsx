@@ -6,6 +6,7 @@ import Logo from './Logo.jsx'
 import StoreBadges from './StoreBadges.jsx'
 import { investmentLinks } from '../nav.js'
 import { links, ext } from '../links.js'
+import { useDownloadApp } from './DownloadAppProvider.jsx'
 
 const company = [['About us', '/about'], ['Partner', '/partner'], ['Property Hub', '/property-hub'], ['Contact Us', '/contact']]
 const privacy = [['Privacy policy', '/privacy'], ['Terms and condition', '/terms'], ['FAQ', '/faq'], ['Deactivate Account', '/account-deactivation'], ['Request Data Deletion', '/data-deletion']]
@@ -23,6 +24,7 @@ function Col({ title, links }) {
 }
 
 export default function Footer() {
+  const openDownload = useDownloadApp()
   return (
     <footer className="relative overflow-hidden bg-[#0b0604] pb-10 pt-20 text-white">
       <img loading="lazy" decoding="async" src="/images/footer-skyline.webp" alt="" className="pointer-events-none absolute bottom-0 left-1/2 w-[1440px] max-w-none -translate-x-1/2 opacity-40" />
@@ -30,10 +32,10 @@ export default function Footer() {
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <Logo light />
-            <p className="mt-6 flex items-center gap-3"><Phone size={18} />+234 702 500 5857</p>
-            <p className="mt-4 flex items-center gap-3"><Mail size={18} />support@needhomespdc.com</p>
+            <a href="https://wa.me/2347025005857" target="_blank" rel="noopener noreferrer" className="mt-6 flex items-center gap-3 text-white/90 transition hover:text-primary" aria-label="Chat with NeedHomes on WhatsApp at +234 702 500 5857"><Phone size={18} />+234 702 500 5857</a>
+            <a href="mailto:support@needhomespdc.com" className="mt-4 flex items-center gap-3 text-white/90 transition hover:text-primary"><Mail size={18} />support@needhomespdc.com</a>
             <p className="mt-8 text-sm text-white/85">Join the 1250+ investors who signed up today</p>
-            <StoreBadges />
+            <StoreBadges onUnavailable={openDownload} />
           </div>
           <Col title="Company" links={company} />
           <Col title="Investment" links={investmentLinks.map(l => [l.label, l.to])} />

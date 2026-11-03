@@ -59,3 +59,20 @@ dialog::backdrop { animation: backdrop-in .25s ease; }
 @keyframes modal-in { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
 @keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { dialog[open], dialog::backdrop { animation: none; } }
+
+/* Seamless partner-logo marquee. Each duplicated group is exactly half the track. */
+@keyframes partner-marquee { to { transform: translateX(-50%); } }
+.partner-marquee { overflow: hidden; touch-action: pan-y; -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent); mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent); }
+.partner-marquee-track { display: flex; width: max-content; animation: partner-marquee 42s linear infinite; will-change: transform; }
+.partner-marquee-group { display: flex; gap: 1rem; padding-right: 1rem; }
+.partner-marquee:hover .partner-marquee-track, .partner-marquee:focus-within .partner-marquee-track { animation-play-state: paused; }
+.partner-logo:hover, .partner-logo:focus-within { transform: translateY(-3px) scale(1.025); box-shadow: 0 14px 34px rgba(0,0,0,.16); outline: 2px solid rgba(239,106,27,.28); }
+@media (prefers-reduced-motion: reduce) {
+  .partner-marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; scrollbar-width: thin; }
+  .partner-marquee-track { animation: none; }
+  .partner-marquee-group[aria-hidden="true"] { display: none; }
+}
+
+@keyframes hot-fire { 0%, 100% { transform: translateY(0) rotate(-4deg) scale(1); } 45% { transform: translateY(-2px) rotate(5deg) scale(1.13); } 70% { transform: translateY(0) rotate(-2deg) scale(.96); } }
+.hot-fire { animation: hot-fire 1.1s ease-in-out infinite; transform-origin: bottom center; }
+@media (prefers-reduced-motion: reduce) { .hot-fire { animation: none; } }

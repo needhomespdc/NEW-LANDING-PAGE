@@ -6,8 +6,8 @@ import { Link } from '@/lib/router'
 import { imgSrc, leftLabel } from '../data/properties.js'
 import Hero from '../components/Hero.jsx'
 import CtaBand from '../components/CtaBand.jsx'
+import PropertyBadges from '../components/PropertyBadges.jsx'
 
-const badge = { Fractional: 'bg-[#5B21B6] text-white', Outright: 'bg-white text-ink', 'Land banking': 'bg-primary text-white', 'Co-Dev': 'bg-[#0F8A5F] text-white', 'Save-to-Own': 'bg-[#1D4ED8] text-white' }
 const filters = ['All properties', 'Fractional', 'Co-Dev', 'Land banking', 'Save-to-Own', 'Outright']
 const dropdowns = ['Location', 'Types', 'Property types', 'Return types']
 const PAGE_SIZE = 6
@@ -25,10 +25,7 @@ function Card({ p }) {
     <Link to={`/property-hub/${p.slug}`} className="block rounded-2xl bg-[#F1F4F8] p-2.5 transition-shadow hover:shadow-lg">
       <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
         <Image src={imgSrc(p)} alt={p.name} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover" />
-        <div className="absolute left-3 top-3 flex gap-2">
-          <span className={`rounded-md px-2.5 py-1 text-sm ${badge[p.type]}`}>{p.type}</span>
-          {p.isNew && <span className="rounded-md bg-primary px-2.5 py-1 text-sm text-white">NEW</span>}
-        </div>
+        <PropertyBadges property={p} compact className="absolute left-3 top-3" />
         <button onClick={e => { e.preventDefault(); e.stopPropagation(); setLiked(!liked) }} aria-pressed={liked} aria-label={`Save ${p.name}`} className="absolute right-3 top-3 grid size-8 place-items-center rounded-full bg-white/90">
           <Heart size={16} className={liked ? 'fill-primary text-primary' : ''} />
         </button>
@@ -62,7 +59,7 @@ export default function PropertyHub({ properties = [] }) {
   const lastResult = Math.min(page * PAGE_SIZE, list.length)
   return (
     <>
-      <Hero tag="Property Hub" title="Pay gradually toward a home and own it confidently" text="Browse and invest in verified real estate opportunities across every NeedHomes investment model." />
+      <Hero tag="Property Hub" title="Find Your Next Property Investment" text="Browse and invest in verified real estate opportunities across every NeedHomes investment model." />
       <section className="py-16 page-x">
         <div className="flex flex-wrap gap-3">
           <label className="relative min-w-60 flex-1">

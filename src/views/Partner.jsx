@@ -1,4 +1,5 @@
 'use client'
+import { Building2, HandCoins, TrendingUp } from 'lucide-react'
 import Hero from '../components/Hero.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 import ContactForm from '../components/ContactForm.jsx'
@@ -40,9 +41,10 @@ export default function Partner() {
           ))}
         </div>
         <dl className="mt-14 grid gap-8 rounded-2xl bg-[#F1F4F8] px-8 py-12 text-center md:grid-cols-3">
-          {stats.map(([n, l, d]) => (
-            <div key={l}><dd className="text-3xl font-medium">{n}</dd><dt className="mt-2 text-sm font-medium text-primary">{l}</dt><p className="mx-auto mt-2 max-w-[300px] text-sm text-muted">{d}</p></div>
-          ))}
+          {stats.map(([n, l, d]) => {
+            const Icon = l === 'Total Partnership Value' ? HandCoins : l === 'Average Partner ROI' ? TrendingUp : Building2
+            return <div key={l} className="flex flex-col items-center"><span className="grid size-12 place-items-center rounded-xl bg-black text-primary"><Icon size={24} strokeWidth={2} aria-hidden="true" /></span><dd className="mt-4 text-3xl font-medium">{n}</dd><dt className="mt-2 text-sm font-medium text-primary">{l}</dt><p className="mx-auto mt-2 max-w-[300px] text-sm text-muted">{d}</p></div>
+          })}
         </dl>
       </section>
 

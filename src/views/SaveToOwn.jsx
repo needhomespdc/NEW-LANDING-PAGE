@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Link } from '@/lib/router'
 import { Sparkles } from 'lucide-react'
 import BulletIcon from '../components/BulletIcon.jsx'
+import StepIcon from '../components/StepIcon.jsx'
 import Hero from '../components/Hero.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 
@@ -50,7 +51,7 @@ function Steps() {
                   aria-current={on}
                   className={`flex w-full gap-4 rounded-2xl p-4 text-left transition-colors ${on ? 'bg-white shadow-sm' : 'hover:bg-white/60'}`}
                 >
-                  <BulletIcon big active={on} className="mt-1" />
+                  <StepIcon label={s.title} active={on} />
                   <span>
                     <span className={`block text-2xl font-medium transition-colors ${on ? 'text-primary' : 'text-ink'}`}>{s.title}</span>
                     <span className="mt-1 block max-w-[380px] text-muted">{s.text}</span>
