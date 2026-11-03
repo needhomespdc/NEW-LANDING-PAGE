@@ -4,6 +4,7 @@ import { Link, NavLink } from '@/lib/router'
 import { ChevronDown, ArrowDownRight, Menu, X } from 'lucide-react'
 import Logo from './Logo.jsx'
 import { useWaitlist } from './WaitlistProvider.jsx'
+import { useDownloadApp } from './DownloadAppProvider.jsx'
 import { navLinks } from '../nav.js'
 
 function Item({ item }) {
@@ -47,6 +48,7 @@ export default function Navbar({ tone }) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const openWaitlist = useWaitlist()
+  const openDownload = useDownloadApp()
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > 24)
     update()
@@ -59,14 +61,16 @@ export default function Navbar({ tone }) {
       <Link to="/" className="rounded-br-[28px] bg-white px-7 pb-4 pt-5 md:px-10" aria-label="NeedHomes home"><Logo /></Link>
       <div className="hidden flex-1 items-center justify-between pl-4 pr-8 pt-6 lg:flex">
         <div className="flex items-center gap-1">{navLinks.map(i => <Item key={i.label} item={i} />)}</div>
-        <button type="button" onClick={() => openWaitlist('get-started')} className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-[15px] font-medium text-ink">
-          Get Started <ArrowDownRight size={16} />
-        </button>
+        <div className="flex items-center gap-2">
+          <button type="button" onClick={openDownload} className="rounded-xl border border-white/50 px-4 py-2.5 text-[15px] font-medium text-white transition hover:bg-white/10">Download App</button>
+          <button type="button" onClick={() => openWaitlist('get-started')} className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-[15px] font-medium text-ink">Get Started <ArrowDownRight size={16} /></button>
+        </div>
       </div>
       <button className="p-5 text-white lg:hidden" onClick={() => setOpen(!open)} aria-label="Toggle menu" aria-expanded={open}>{open ? <X /> : <Menu />}</button>
       {open && (
         <div className="absolute inset-x-4 top-20 rounded-2xl bg-white p-4 shadow-xl lg:hidden">
           {navLinks.map(item => <MobileItem key={item.label} item={item} closeMenu={() => setOpen(false)} />)}
+          <button type="button" onClick={() => { setOpen(false); openDownload() }} className="mt-2 w-full rounded-xl border border-primary px-4 py-3 font-medium text-primary">Download App</button>
           <button type="button" onClick={() => { setOpen(false); openWaitlist('get-started') }} className="mt-2 w-full rounded-xl bg-primary px-4 py-3 font-medium text-white">Get Started</button>
         </div>
       )}

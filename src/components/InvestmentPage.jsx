@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Link } from '@/lib/router'
 import { Sparkles } from 'lucide-react'
 import BulletIcon from './BulletIcon.jsx'
+import StepIcon from './StepIcon.jsx'
 import Hero from './Hero.jsx'
 import CtaBand from './CtaBand.jsx'
 
@@ -26,7 +27,7 @@ export function Steps({ title, steps, numbered = false }) {
                   className={`flex w-full gap-4 rounded-2xl p-4 text-left transition-colors ${on ? 'bg-white shadow-sm' : 'hover:bg-white/60'}`}>
                   {numbered
                     ? <span className={`w-12 shrink-0 text-2xl font-semibold transition-colors ${on ? 'text-primary' : 'text-[#FDB894]'}`}>{String(i + 1).padStart(2, '0')}</span>
-                    : <BulletIcon big active={on} className="mt-1" />}
+                    : <StepIcon label={s.title} active={on} />}
                   <span><span className={`block text-2xl font-medium transition-colors ${on ? 'text-primary' : ''}`}>{s.title}</span><span className="mt-1 block max-w-[420px] text-muted">{s.text}</span></span>
                 </button>
               </li>

@@ -6,17 +6,20 @@ export const AppleIcon = p => <svg {...base} {...p}><path d="M12.152 6.896c-.948
 export const PlayIcon = p => <svg {...base} {...p}><path d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z" /></svg>
 
 // The two store badges used in the footer.
-export default function StoreBadges() {
+export default function StoreBadges({ onUnavailable, className = '' }) {
+  const store = (href, label, content, classes) => href && href !== '#'
+    ? <a href={href} {...ext(href)} aria-label={label} className={classes}>{content}</a>
+    : <button type="button" onClick={onUnavailable} aria-label={`${label} — join the launch waitlist`} className={classes}>{content}</button>
   return (
-    <div className="mt-3 flex flex-wrap gap-2.5">
-      <a href={links.appStore} {...ext(links.appStore)} aria-label="Download on the App Store" className="flex items-center gap-2.5 rounded-lg bg-primary px-3 py-2 text-white">
+    <div className={`mt-3 flex flex-wrap gap-2.5 ${className}`}>
+      {store(links.appStore, 'Download on the App Store', <>
         <AppleIcon className="size-6" />
         <span className="leading-tight"><span className="block text-[9px] uppercase tracking-wide opacity-85">Download on the</span><span className="text-base font-medium">App Store</span></span>
-      </a>
-      <a href={links.playStore} {...ext(links.playStore)} aria-label="Get it on Google Play" className="flex items-center gap-2.5 rounded-lg bg-white px-3 py-2 text-ink">
+      </>, 'flex items-center gap-2.5 rounded-lg bg-primary px-3 py-2 text-left text-white transition hover:-translate-y-0.5')}
+      {store(links.playStore, 'Get it on Google Play', <>
         <PlayIcon className="size-6" />
         <span className="leading-tight"><span className="block text-[9px] uppercase tracking-wide opacity-70">Get it on</span><span className="text-base font-medium">Google Play</span></span>
-      </a>
+      </>, 'flex items-center gap-2.5 rounded-lg border border-black/10 bg-white px-3 py-2 text-left text-ink shadow-sm transition hover:-translate-y-0.5')}
     </div>
   )
 }

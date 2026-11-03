@@ -6,9 +6,13 @@ import { CircleUser, ChevronLeft, ChevronRight, MapPin, TrendingUp, Home as Home
 import Hero from '../components/Hero.jsx'
 import CountUp from '../components/CountUp.jsx'
 import { useWaitlist } from '../components/WaitlistProvider.jsx'
-import CtaBand from '../components/CtaBand.jsx'
 import FaqList from '../components/FaqList.jsx'
 import { imgSrc, leftLabel } from '../data/properties.js'
+import PropertyBadges from '../components/PropertyBadges.jsx'
+import PartnerMarquee from '../components/PartnerMarquee.jsx'
+import CommunityCta from '../components/CommunityCta.jsx'
+import StoreBadges from '../components/StoreBadges.jsx'
+import { useDownloadApp } from '../components/DownloadAppProvider.jsx'
 
 const Tag = ({ children }) => <span className="inline-block rounded-full bg-primary-50 px-3 py-1.5 text-sm text-primary">{children}</span>
 const Head = ({ a, b, text }) => (
@@ -18,8 +22,8 @@ const Head = ({ a, b, text }) => (
   </div>
 )
 function AppBtn() {
-  const openWaitlist = useWaitlist()
-  return <button type="button" onClick={() => openWaitlist('download-app')} className="inline-flex items-center rounded-xl bg-primary px-7 py-3 text-[15px] font-medium text-white">Download App</button>
+  const openDownload = useDownloadApp()
+  return <button type="button" onClick={openDownload} className="inline-flex items-center rounded-xl bg-primary px-7 py-3 text-[15px] font-medium text-white">Download App</button>
 }
 
 const bars = [['Jan', 51], ['Feb', 71], ['Mar', 56], ['Apr', 100], ['May', 67], ['Jun', 67]]
@@ -32,7 +36,6 @@ const ways = [
   ['invest-outright', 'Outright Purchase', 'Purchase ready homes with verified titles, take full ownership, enjoy the freedom to live in, rent out, or hold...', '/investment/outright-purchase'],
 ]
 const steps = [['Create Your Account', 'Sign up free and complete a quick verification.'], ['Browse & Choose', 'Explore verified properties and pick your investment.'], ['Invest Securely', 'Fund through your wallet and confirm in a few taps.'], ['Track & Earn', 'Monitor progress and returns in real time.']]
-const badge = { Fractional: 'bg-[#5B21B6] text-white', Outright: 'bg-white text-ink', 'Land banking': 'bg-primary text-white', 'Co-Dev': 'bg-[#0F8A5F] text-white', 'Save-to-Own': 'bg-[#1D4ED8] text-white' }
 const partnerRows = [
   [['QoreID', 'partner-qoreid'], ['Cutstruct', 'partner-cutstruct'], ['GlobalTrust', 'partner-globaltrust'], ['Grayson\'s Trust', 'partner-graysons', true]],
   [['REDAN', 'partner-redan'], ['Paystack', 'partner-paystack'], ['Wema Bank', null]],
@@ -55,7 +58,7 @@ function Slider({ properties }) {
           <Link key={p.slug} to={`/property-hub/${p.slug}`} className="w-[290px] shrink-0 snap-start rounded-2xl bg-[#F1F4F8] p-2.5 transition-shadow hover:shadow-lg md:w-[320px]">
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
               <Image src={imgSrc(p)} alt={p.name} fill sizes="(max-width: 768px) 290px, 320px" className="object-cover" draggable="false" />
-              <span className={`absolute left-3 top-3 rounded-md px-2.5 py-1 text-sm ${badge[p.type]}`}>{p.type}</span>
+              <PropertyBadges property={p} compact className="absolute left-3 top-3" />
             </div>
             <div className="px-1.5 pb-1.5 pt-4">
               <h3 className="truncate text-xl font-medium">{p.name}</h3>
@@ -75,6 +78,7 @@ function Slider({ properties }) {
 
 export default function Home({ properties = [], reviews = [], reviewSummary = null }) {
   const openWaitlist = useWaitlist()
+  const openDownload = useDownloadApp()
   return (
     <>
       <Hero tone="orange" big animate title="Your Smooth Journey to Property Ownership" accent="" ctas={false}
@@ -120,7 +124,7 @@ export default function Home({ properties = [], reviews = [], reviewSummary = nu
                 </svg>
                 </div>
               </div>
-              <button type="button" onClick={() => openWaitlist('download-app')} className="flex items-center justify-center rounded-xl bg-black py-3.5 font-medium text-white">Download App</button>
+              <button type="button" onClick={openDownload} className="flex items-center justify-center rounded-xl bg-black py-3.5 font-medium text-white">Download App</button>
             </div>
 
             <div className="rounded-3xl bg-[#F8FAFC] p-6 text-ink">
@@ -144,11 +148,11 @@ export default function Home({ properties = [], reviews = [], reviewSummary = nu
         </div>
       </Hero>
 
-      <section className="grid gap-4 bg-black p-4 md:grid-cols-2 md:px-[66px] lg:grid-cols-[2fr_repeat(3,1fr)]">
+      <section className="grid gap-4 bg-white px-4 py-8 md:grid-cols-2 md:px-[66px] lg:grid-cols-[2fr_repeat(3,1fr)]">
         {stats.map(([l, v], i) => (
-          <div key={l} className={`flex min-h-64 flex-col justify-center rounded-[28px] p-8 md:min-h-72 lg:min-h-[350px] lg:px-10 ${i === 0 ? 'bg-black text-white' : 'bg-[#F4F6F8]'}`}>
+          <div key={l} className={`flex min-h-64 flex-col justify-center rounded-[28px] p-8 md:min-h-72 lg:min-h-[280px] lg:px-10 ${i === 0 ? 'bg-[#2A1204] text-white' : 'bg-[#F4F6F8]'}`}>
             <p className={`text-lg md:text-xl lg:text-[22px] ${i === 0 ? 'text-white/85' : 'text-ink'}`}>{l}</p>
-            <p className={`mt-5 whitespace-nowrap text-[58px] font-semibold leading-none tracking-tight md:text-[68px] xl:text-[78px] ${i === 0 ? 'text-white' : 'text-primary'}`}><CountUp value={v} /></p>
+            <p className={`mt-5 whitespace-nowrap text-[64px] font-semibold leading-[.92] tracking-[-0.04em] sm:text-[72px] lg:text-[68px] xl:text-[80px] 2xl:text-[92px] ${i === 0 ? 'text-white' : 'text-primary'}`}><CountUp value={v} /></p>
           </div>
         ))}
       </section>
@@ -182,7 +186,7 @@ export default function Home({ properties = [], reviews = [], reviewSummary = nu
               </li>
             ))}
           </ol>
-          <div className="mt-8 flex flex-wrap items-center gap-6"><AppBtn /><Link to="/faq" className="inline-flex items-center gap-1 text-sm">See all process <ChevronRight size={16} /></Link></div>
+          <StoreBadges onUnavailable={() => openWaitlist('download-app')} className="mt-8" />
         </div>
       </section>
 
@@ -204,21 +208,10 @@ export default function Home({ properties = [], reviews = [], reviewSummary = nu
 
       <section className="bg-[#64748B] py-20 page-x">
         <h2 className="text-center text-4xl font-semibold text-white md:text-5xl">Meet our Partners</h2>
-        <div className="mt-10 space-y-4">
-          {partnerRows.map((row, i) => (
-            <div key={i} className="flex flex-wrap justify-center gap-4">
-              {row.map(([name, img, dark]) => (
-                <div key={name} className={`grid h-24 w-[calc(50%-8px)] place-items-center rounded-xl px-5 md:w-[240px] ${dark ? 'bg-[#262626]' : 'bg-white'}`}>
-                  {img ? <img loading="lazy" decoding="async" src={`/images/${img}.webp`} alt={name} className="max-h-16 w-auto max-w-full object-contain" />
-                    : <span className="text-xl font-bold tracking-tight text-[#8A1B6F]">{name.toUpperCase()}</span>}
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
+        <PartnerMarquee partners={partnerRows.flat()} />
       </section>
 
-      <CtaBand title="Ready to Start Your" accent="Investment Journey" text="Join investors building wealth the smart way." />
+      <CommunityCta />
     </>
   )
 }
