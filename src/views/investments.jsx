@@ -44,11 +44,11 @@ const codev = {
   middle: { type: 'flow', tag: 'Co-development Resale', heading: ['You Invest. We Build.', 'You Own.'], flow: ['Invest', 'Co-Develop', 'Own', 'Resell'],
     text: ["Your NeedHomes co-development journey doesn't have to end at handover. Once construction is completed, you can list your property for resale directly on the NeedHomes platform."] },
   key: { img: 'codev-key', alt: 'Investor and developer shaking hands in front of a building site', tag: 'Why Co-Develop with NeedHomes?', heading: ['Stronger Projects.', 'Shared Ownership.'],
-    text: ['We turn land and capital into profitable real estate opportunities.', 'Partner with NeedHomes for trusted execution, Project Milestone, shared returns, and market-driven projects from development to sales.'], button: 'Start Investing Today' },
+    text: ['We turn land and capital into profitable real estate opportunities.', 'Partner with NeedHomes for trusted execution, Project Milestone, shared returns, and market-driven projects from development to sales.'], button: 'Join a Project Today' },
   cta: cta('Ready to Partner in', 'Development', 'Join investors who are building wealth by holding strategic land over time'),
 }
 const fractional = {
-  tag: 'Fractional Ownership', title: 'Own a share of real estate and earn rental/ capital appreciation',
+  tag: 'Fractional Ownership', title: 'Own a share of real estate and earn rental and capital appreciation',
   text: 'Explore the fractional ownership Property Hub with verified properties, invest and start earning passive income.',
   aboutTag: 'About Fractional Ownership', headline: ['Smart Investing.', 'Shared Ownership. Real Returns.'],
   about: ['Fractional Ownership allows you to own a share of premium real estate properties. You earn rental income periodically or benefit from capital appreciation when the investment matures.'],
