@@ -3,11 +3,11 @@ import { useState } from 'react'
 import { Plus, Minus } from 'lucide-react'
 import { faqs } from '../data/faqs.js'
 
-export default function FaqList({ limit }) {
+export default function FaqList({ limit, items = faqs }) {
   const [open, setOpen] = useState(1)
   return (
     <ul className="space-y-2">
-      {faqs.slice(0, limit).map(([q, a], i) => {
+      {items.slice(0, limit).map(([q, a], i) => {
         const on = open === i
         return (
           <li key={q} className={`rounded-2xl px-6 py-5 transition-colors md:px-8 ${on ? 'bg-[#EBF1F8]' : ''}`}>

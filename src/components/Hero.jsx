@@ -2,8 +2,11 @@
 import { Link } from '@/lib/router'
 import Navbar from './Navbar.jsx'
 import Breadcrumbs from './Breadcrumbs.jsx'
+import { useWaitlist } from './WaitlistProvider.jsx'
 
 export default function Hero({ tag, title, text, ctas = true, primaryLabel = 'Start Investing', primaryTo = 'https://app.needhomespdc.com/', accent = '.', badge, tone, big, animate, children }) {
+  const openWaitlist = useWaitlist()
+  const isStartInvesting = primaryLabel.toLowerCase().startsWith('start investing')
   return (
     <header className="px-4 pt-4 md:px-[66px]">
       <Navbar tone={tone} />
@@ -24,7 +27,9 @@ export default function Hero({ tag, title, text, ctas = true, primaryLabel = 'St
           {children}
           {ctas && (
             <div className="mx-6 mt-10 flex flex-wrap justify-center gap-3 border-t border-white/20 pt-8 md:mx-[48px]">
-              {primaryTo.startsWith('#')
+              {isStartInvesting
+                ? <button type="button" onClick={() => openWaitlist('start-investing')} className="rounded-xl bg-primary px-8 py-3 text-[15px] font-medium text-white">{primaryLabel}</button>
+                : primaryTo.startsWith('#')
                 ? <a href={primaryTo} className="rounded-xl bg-primary px-8 py-3 text-[15px] font-medium text-white">{primaryLabel}</a>
                 : primaryTo.startsWith('http')
                   ? <a href={primaryTo} className="rounded-xl bg-primary px-8 py-3 text-[15px] font-medium text-white">{primaryLabel}</a>

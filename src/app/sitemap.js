@@ -11,7 +11,7 @@ export default async function sitemap() {
       priority: routePriority(path),
     })),
     ...properties.map(property => ({
-      url: `${SITE}/property-hub/${property.slug}`,
+      url: `${SITE}/properties/${property.slug}`,
       ...(property.updatedAt && { lastModified: new Date(property.updatedAt) }),
       changeFrequency: 'weekly',
       priority: 0.8,

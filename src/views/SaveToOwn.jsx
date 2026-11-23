@@ -77,7 +77,7 @@ function Steps() {
 export default function SaveToOwn() {
   return (
     <>
-      <Hero tag="Save-to-Own" title="Pay gradually toward a home and own it confidently"
+      <Hero tag="Save-to-Own" title="Pay gradually towards a home and own it confidently"
         text="Save to Own allows you to secure a verified property and pay gradually through a flexible payment plan. Once your payments are complete, you become the full owner of the property." />
 
       <section className="py-20 page-x">
@@ -108,7 +108,7 @@ export default function SaveToOwn() {
           <h2 className="mt-5 text-5xl font-semibold leading-tight">Can't Complete your <span className="text-muted">Payment Plan</span></h2>
           <p className="mt-6 max-w-[520px] text-muted">If you are unable to continue with your save-to-own payment plan, you can request an exit.</p>
           <p className="mt-4 max-w-[520px] text-muted">Once your exit is approved, you will receive the amount you have paid towards the property, based on your eligible payments and the applicable exit terms.</p>
-          <Link to="/property-hub" className="mt-7 inline-block rounded-xl bg-primary px-6 py-3 text-[15px] font-medium text-white">Buy a property</Link>
+          <Link to="/property-hub" className="mt-7 inline-block rounded-xl bg-primary px-6 py-3 text-[15px] font-medium text-white">Start Saving-to-Own</Link>
         </div>
       </section>
 

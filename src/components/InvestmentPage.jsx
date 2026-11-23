@@ -6,6 +6,7 @@ import BulletIcon from './BulletIcon.jsx'
 import StepIcon from './StepIcon.jsx'
 import Hero from './Hero.jsx'
 import CtaBand from './CtaBand.jsx'
+import { useWaitlist } from './WaitlistProvider.jsx'
 
 const Pill = ({ children }) => <span className="inline-flex items-center gap-2 rounded-full border border-ink/15 px-3 py-1.5 text-sm"><Sparkles size={14} />{children}</span>
 const Dot = ({ big }) => <BulletIcon big={big} />
@@ -60,6 +61,7 @@ function Flow({ words }) {
 }
 
 export default function InvestmentPage({ c }) {
+  const openWaitlist = useWaitlist()
   const m = c.middle, k = c.key
   return (
     <>
@@ -102,7 +104,7 @@ export default function InvestmentPage({ c }) {
           <div className="mt-5 max-w-[560px] space-y-3 text-muted">{k.text.map(p => <p key={p}>{p}</p>)}</div>
           {k.bullets && <ul className="mt-8 space-y-5">{k.bullets.map(b => <li key={b} className="flex items-center gap-4"><Dot big /><span className="max-w-[460px] text-[17px]">{b}</span></li>)}</ul>}
           {k.button.toLowerCase().startsWith('start investing')
-            ? <a href="https://app.needhomespdc.com/" className="mt-8 inline-block rounded-xl bg-primary px-6 py-3 text-[15px] font-medium text-white">{k.button}</a>
+            ? <button type="button" onClick={() => openWaitlist('start-investing')} className="mt-8 inline-block rounded-xl bg-primary px-6 py-3 text-[15px] font-medium text-white">{k.button}</button>
             : <Link to={k.to || '/property-hub'} className="mt-8 inline-block rounded-xl bg-primary px-6 py-3 text-[15px] font-medium text-white">{k.button}</Link>}
         </div>
       </section>

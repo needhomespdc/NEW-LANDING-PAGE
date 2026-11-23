@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useCallback, useContext, useRef } from 'react'
-import { Download, Smartphone, X } from 'lucide-react'
+import { Smartphone, X } from 'lucide-react'
 import StoreBadges from './StoreBadges.jsx'
 import { useWaitlist } from './WaitlistProvider.jsx'
 
@@ -39,8 +39,6 @@ export default function DownloadAppProvider({ children }) {
           </div>
           <div className="p-7 md:p-9">
             <StoreBadges onUnavailable={joinWaitlist} className="justify-center" />
-            <p className="mt-5 text-center text-sm text-muted">Store links will open in a new tab. If your store version is not yet available, you can join the launch waitlist.</p>
-            <button type="button" onClick={joinWaitlist} className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl border border-black/15 px-5 py-3 font-medium transition hover:border-primary hover:text-primary"><Download size={17} />Join app launch waitlist</button>
           </div>
         </div>
       </dialog>

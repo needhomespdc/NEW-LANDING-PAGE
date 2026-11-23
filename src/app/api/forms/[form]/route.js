@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server'
 import { FORMS } from '@/lib/forms'
+import { createHmac, randomBytes, timingSafeEqual } from 'node:crypto'
+import { resolveMx } from 'node:dns/promises'
 
 // Very small per-instance rate limit (5 submissions per minute per IP). Add a real limiter if you get abuse.
 const hits = new Map()
@@ -10,6 +12,39 @@ const limited = ip => {
   return recent.length > 5
 }
 const fail = (error, status) => NextResponse.json({ error }, { status })
+const captchaSecret = process.env.CAPTCHA_SECRET || process.env.FORM_API_KEY || randomBytes(32).toString('hex')
+const sign = value => createHmac('sha256', captchaSecret).update(value).digest('base64url')
+const disposableDomains = new Set(['mailinator.com','guerrillamail.com','10minutemail.com','tempmail.com','yopmail.com','throwawaymail.com','trashmail.com'])
+
+export async function GET(_request, { params }) {
+  const { form } = await params
+  if (!FORMS[form]) return fail('Unknown form.', 404)
+  const a = Math.floor(Math.random() * 8) + 2
+  const b = Math.floor(Math.random() * 8) + 2
+  const value = [a, b, Date.now() + 10 * 60_000, randomBytes(8).toString('hex')].join(':')
+  return NextResponse.json({ question: `${a} + ${b} = ?`, token: `${Buffer.from(value).toString('base64url')}.${sign(value)}` }, { headers: { 'Cache-Control': 'no-store' } })
+}
+
+function validCaptcha(token, answer) {
+  try {
+    const [encoded, supplied] = String(token || '').split('.')
+    const value = Buffer.from(encoded, 'base64url').toString()
+    const [a, b, expires] = value.split(':')
+    const expected = sign(value)
+    if (!supplied || supplied.length !== expected.length || !timingSafeEqual(Buffer.from(supplied), Buffer.from(expected))) return false
+    return Date.now() <= Number(expires) && Number(answer) === Number(a) + Number(b)
+  } catch { return false }
+}
+
+async function validEmail(email) {
+  if (!/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(email)) return false
+  const domain = email.split('@')[1].toLowerCase()
+  if (disposableDomains.has(domain)) return false
+  try { return (await resolveMx(domain)).length > 0 } catch (error) {
+    if (error?.code === 'ENOTFOUND' || error?.code === 'ENODATA') return false
+    return true
+  }
+}
 
 export async function POST(request, { params }) {
   const { form } = await params
@@ -22,17 +57,18 @@ export async function POST(request, { params }) {
   let body
   try { body = await request.json() } catch { return fail('Invalid request.', 400) }
   if (body.website) return NextResponse.json({ ok: true }) // hidden honeypot field: bots fill it, people do not
+  if (!validCaptcha(body.captchaToken, body.captchaAnswer)) return fail('The security answer was incorrect or expired. Please try again.', 400)
 
   const data = {}
   for (const [k, v] of Object.entries(body)) {
-    if (k === 'website') continue
+    if (k === 'website' || k === 'captchaToken' || k === 'captchaAnswer') continue
     if (typeof v === 'string') data[k] = v.trim().slice(0, 5000)
     else if (typeof v === 'boolean') data[k] = v
   }
   // FormData serializes a checked checkbox as "on"; APIs generally expect a boolean.
   if ('confirm' in data) data.confirm = data.confirm === true || data.confirm === 'on' || data.confirm === 'true'
   if (cfg.required.some(k => !data[k])) return fail('Please fill in all required fields.', 400)
-  if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) return fail('Please enter a valid email address.', 400)
+  if (data.email && !(await validEmail(data.email))) return fail('Please enter a valid, non-temporary email address with a working mail domain.', 400)
 
   // Translate the website's field names to each endpoint's strict DTO and
   // omit UI-only values (for example, the waitlist trigger).

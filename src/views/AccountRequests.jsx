@@ -6,6 +6,7 @@ import { submitForm } from '@/lib/submitForm'
 import Hero from '../components/Hero.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 import FormSuccessModal from '../components/FormSuccessModal.jsx'
+import CaptchaField from '../components/CaptchaField.jsx'
 
 const a = 'text-primary underline-offset-2 hover:underline'
 const Mail_ = () => <a href="mailto:support@needhomespdc.com" className={a}>support@needhomespdc.com</a>
@@ -15,6 +16,8 @@ const label = 'block text-sm uppercase text-muted'
 function RequestForm({ kind, intro, confirm, button }) {
   const [status, setStatus] = useState({ state: 'idle', message: '' })
   const [showSuccess, setShowSuccess] = useState(false)
+  const [emailError, setEmailError] = useState('')
+  const validateEmail = e => { const value=e.currentTarget.value.trim(); const valid=/^[^\\s@]+@[^\\s@]+\\.[A-Za-z]{2,}$/.test(value); setEmailError(value&&!valid?'Please enter a valid email address.':''); e.currentTarget.setCustomValidity(valid||!value?'':'Please enter a valid email address.') }
   async function onSubmit(e) {
     e.preventDefault()
     const el = e.currentTarget
@@ -33,12 +36,12 @@ function RequestForm({ kind, intro, confirm, button }) {
       <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 opacity-0" />
       <div className="mt-4 space-y-5">
         <label className={label}>Full name<span className="text-primary"> *</span><input required name="name" autoComplete="name" className={field} /></label>
-        <label className={label}>Account email address<span className="text-primary"> *</span><input required type="email" name="email" autoComplete="email" className={field} /></label>
+        <label className={label}>Account email address<span className="text-primary"> *</span><input required type="email" name="email" autoComplete="email" onInput={validateEmail} onBlur={validateEmail} className={field} />{emailError && <span className="mt-1.5 block normal-case text-red-600">{emailError}</span>}</label>
         <label className={label}>Additional details<textarea name="details" rows={6} className={`${field} resize-none`} /></label>
       </div>
       <label className="mt-5 flex items-start gap-3 text-muted"><input required type="checkbox" name="confirm" className="mt-1 size-4 accent-[#EF6A1B]" />{confirm}</label>
       <p className="mt-4 text-sm text-muted">By providing your name, phone number and email you consent to NeedHomes Property Investment Limited's use of your personal data in accordance with the <Link to="/privacy" className={a}>Privacy Policy</Link>.</p>
-      <button disabled={status.state === 'sending'} className="mt-5 rounded-xl bg-primary px-8 py-3.5 font-medium text-white disabled:opacity-60">{status.state === 'sending' ? 'Sending…' : button}</button>
+      <CaptchaField form={kind} />`n      <button disabled={status.state === 'sending' || !!emailError} className="mt-5 rounded-xl bg-primary px-8 py-3.5 font-medium text-white disabled:opacity-60">{status.state === 'sending' ? 'Sending…' : button}</button>
       <p className="mt-5 flex items-center gap-3 text-muted"><Mail size={18} className="text-primary" />Prefer email? Write to support@needhomespdc.com</p>
       {status.state === 'error' && <p role="alert" className="mt-3 text-sm text-red-600">{status.message}</p>}
       <FormSuccessModal

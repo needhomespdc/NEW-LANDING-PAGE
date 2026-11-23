@@ -68,7 +68,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/property-hub" element={<PropertyHub />} />
-          <Route path="/property-hub/:slug" element={<PropertyDetail />} />
+          <Route path="/properties/:slug" element={<PropertyDetail />} />
           <Route path="/partner" element={<Partner />} />
           <Route path="/partner/agent" element={<AgentPartner />} />
           <Route path="/contact" element={<Contact />} />

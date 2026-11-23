@@ -12,7 +12,6 @@ import PropertyBadges from '../components/PropertyBadges.jsx'
 import PartnerMarquee from '../components/PartnerMarquee.jsx'
 import CommunityCta from '../components/CommunityCta.jsx'
 import StoreBadges from '../components/StoreBadges.jsx'
-import { useDownloadApp } from '../components/DownloadAppProvider.jsx'
 
 const Tag = ({ children }) => <span className="inline-block rounded-full bg-primary-50 px-3 py-1.5 text-sm text-primary">{children}</span>
 const Head = ({ a, b, text }) => (
@@ -21,10 +20,6 @@ const Head = ({ a, b, text }) => (
     <p className="max-w-[440px] text-sm text-muted lg:justify-self-end">{text}</p>
   </div>
 )
-function AppBtn() {
-  const openDownload = useDownloadApp()
-  return <button type="button" onClick={openDownload} className="inline-flex items-center rounded-xl bg-primary px-7 py-3 text-[15px] font-medium text-white">Download App</button>
-}
 
 const bars = [['Jan', 51], ['Feb', 71], ['Mar', 56], ['Apr', 100], ['May', 67], ['Jun', 67]]
 const stats = [['Active Investors', '1,250+'], ['Properties Listed', '35+'], ['Investments Funded', '₦2.4B+'], ['Avg. Project ROI', '18.7%']]
@@ -55,7 +50,7 @@ function Slider({ properties }) {
       <button onClick={() => go(1)} aria-label="Next properties" className={`${arrow} -right-5`}><ChevronRight /></button>
       <div ref={ref} role="region" aria-label="Featured properties (use left and right arrow keys to scroll)" tabIndex={0} onKeyDown={e => { if (e.key === 'ArrowRight') go(1); if (e.key === 'ArrowLeft') go(-1) }} className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {featured.map(p => (
-          <Link key={p.slug} to={`/property-hub/${p.slug}`} className="w-[290px] shrink-0 snap-start rounded-2xl bg-[#F1F4F8] p-2.5 transition-shadow hover:shadow-lg md:w-[320px]">
+          <Link key={p.slug} to={`/properties/${p.slug}`} className="w-[290px] shrink-0 snap-start rounded-2xl bg-[#F1F4F8] p-2.5 transition-shadow hover:shadow-lg md:w-[320px]">
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
               <Image src={imgSrc(p)} alt={p.name} fill sizes="(max-width: 768px) 290px, 320px" className="object-cover" draggable="false" />
               <PropertyBadges property={p} compact className="absolute left-3 top-3" />
@@ -78,7 +73,6 @@ function Slider({ properties }) {
 
 export default function Home({ properties = [], reviews = [], reviewSummary = null }) {
   const openWaitlist = useWaitlist()
-  const openDownload = useDownloadApp()
   return (
     <>
       <Hero tone="orange" big animate title="Your Smooth Journey to Property Ownership" accent="" ctas={false}
@@ -124,7 +118,6 @@ export default function Home({ properties = [], reviews = [], reviewSummary = nu
                 </svg>
                 </div>
               </div>
-              <button type="button" onClick={openDownload} className="flex items-center justify-center rounded-xl bg-black py-3.5 font-medium text-white">Download App</button>
             </div>
 
             <div className="rounded-3xl bg-[#F8FAFC] p-6 text-ink">
@@ -148,11 +141,16 @@ export default function Home({ properties = [], reviews = [], reviewSummary = nu
         </div>
       </Hero>
 
-      <section className="grid gap-4 bg-white px-4 py-8 md:grid-cols-2 md:px-[66px] lg:grid-cols-[2fr_repeat(3,1fr)]">
+      <section className="bg-white py-20 page-x">
+        <h2 className="text-center text-[18px] font-semibold uppercase tracking-[0.12em] text-ink">TRUSTED BY</h2>
+        <PartnerMarquee partners={partnerRows.flat()} />
+      </section>
+
+      <section className="grid gap-4 bg-white px-4 py-4 md:grid-cols-2 md:px-[66px] md:py-5 lg:grid-cols-[2fr_repeat(3,1fr)]">
         {stats.map(([l, v], i) => (
-          <div key={l} className={`flex min-h-64 flex-col justify-center rounded-[28px] p-8 md:min-h-72 lg:min-h-[280px] lg:px-10 ${i === 0 ? 'bg-[#2A1204] text-white' : 'bg-[#F4F6F8]'}`}>
+          <div key={l} className={`flex min-h-[190px] flex-col justify-center rounded-[28px] p-6 md:min-h-[210px] lg:min-h-[220px] lg:px-8 ${i === 0 ? 'bg-black text-white' : 'bg-[#F4F6F8]'}`}>
             <p className={`text-lg md:text-xl lg:text-[22px] ${i === 0 ? 'text-white/85' : 'text-ink'}`}>{l}</p>
-            <p className={`mt-5 whitespace-nowrap text-[64px] font-semibold leading-[.92] tracking-[-0.04em] sm:text-[72px] lg:text-[68px] xl:text-[80px] 2xl:text-[92px] ${i === 0 ? 'text-white' : 'text-primary'}`}><CountUp value={v} /></p>
+            <p className={`mt-5 whitespace-nowrap text-[56px] font-semibold leading-none tracking-[-0.035em] ${i === 0 ? 'text-white' : 'text-primary'}`}><CountUp value={v} /></p>
           </div>
         ))}
       </section>
@@ -193,7 +191,7 @@ export default function Home({ properties = [], reviews = [], reviewSummary = nu
       <section className="py-20 page-x">
         <Head a="Featured" b="Properties" text="Hot and newly listed investment opportunities with high potential returns." />
         <Slider properties={properties} />
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-6"><AppBtn /><Link to="/property-hub" className="inline-flex items-center gap-1 text-sm">View Property Hub <ChevronRight size={16} /></Link></div>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-6"><Link to="/property-hub" className="inline-flex items-center gap-1 text-sm">View Property Hub <ChevronRight size={16} /></Link></div>
       </section>
 
       <section className="bg-[#F5F7FA] py-20 page-x">
@@ -206,10 +204,6 @@ export default function Home({ properties = [], reviews = [], reviewSummary = nu
         </div>
       </section>
 
-      <section className="bg-[#64748B] py-20 page-x">
-        <h2 className="text-center text-4xl font-semibold text-white md:text-5xl">Meet our Partners</h2>
-        <PartnerMarquee partners={partnerRows.flat()} />
-      </section>
 
       <CommunityCta />
     </>
