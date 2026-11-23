@@ -1,58 +1,18 @@
-'use client'
-import { Sparkles } from 'lucide-react'
-import { Link } from '@/lib/router'
+﻿'use client'
+import { BadgeCheck,Banknote,Building2,CalendarCheck,ClipboardList,FileSearch,Landmark,LineChart,ReceiptText,ShieldCheck,UserRoundCheck,WalletCards } from 'lucide-react'
 import Hero from '../components/Hero.jsx'
 import CtaBand from '../components/CtaBand.jsx'
-
-// `icon` = file in /images (no extension).
-const steps = [
-  { icon: 'icon-rent-goal', title: 'Set Your Rental Goal', text: ['Tell us how much you need for your next annual rent payment. Your rental goal helps us determine your required savings target and repayment structure.'] },
-  { icon: 'icon-rent-account', title: 'Create Your Pay My Rent Account', text: ['Create your NeedHomes Pay My Rent account and complete the required information, including:'],
-    list: ['Personal information', 'Valid identification and KYC', 'Employment or income information', 'Current rental information', 'Landlord/property details', 'Annual rent amount', 'Preferred repayment plan'], after: ['This information helps us verify your rental needs and assess your eligibility.'] },
-  { icon: 'icon-rent-30', title: 'Start With 30%', text: ['NeedHomes calculates 30% of your verified annual rent as your initial savings target.'], after: ['This is the amount you work towards during the 90-day savings period.'] },
-  { icon: 'icon-rent-fund-90', title: 'Build Your Rent Fund for 90 Days', text: ['Make scheduled payments into your NeedHomes Pay My Rent wallet over the 90-day period.', 'During this period, NeedHomes tracks your:'],
-    list: ['Payment consistency', 'Savings progress', 'Income and cash-flow information', 'KYC status', 'Rent and property verification', 'Eligibility for the remaining 70% rent financing'], after: ['Your payment history helps demonstrate your ability to maintain the agreed repayment plan.'] },
-  { icon: 'icon-rent-target-30', title: 'Reach Your 30% Target', text: ['Once you successfully reach your 30% savings target within the required period, your accumulated funds can move into a designated escrow arrangement with an approved financial partner, subject to applicable legal, regulatory, and financial requirements.'] },
-  { icon: 'icon-rent-70', title: 'Access the Remaining 70%', text: ['Subject to eligibility, approval, and the applicable terms, the remaining 70% of your annual rent may be provided through our financing structure and financial partners.'], after: ['The financed amount is intended to complete your annual rent payment.'] },
-  { icon: 'icon-rent-paid', title: 'Your Rent Is Paid', text: ['Once the required conditions are met, the applicable rent funds are disbursed directly to the verified landlord or property owner, helping you secure your accommodation without having to raise the entire annual rent upfront.'], after: ['Start Preparing for Your Rent Today'] },
-]
-
-export default function PayMyRent() {
-  return (
-    <>
-      <Hero tag="Pay My Rent" badge="Coming Soon" title="Get Ready Before Your Rent Is Due" text="Rent shouldn't become a last-minute financial burden." primaryLabel="Pay My Rent Now" primaryTo="/pay-my-rent" />
-      <section className="grid items-center gap-10 py-20 page-x lg:grid-cols-2">
-        <div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-ink/15 px-3 py-1.5 text-sm"><Sparkles size={14} />About Pay My Rent</span>
-          <h2 className="mt-5 text-5xl font-semibold">Pay My Rent</h2>
-          <div className="mt-6 max-w-[520px] space-y-4 text-sm text-muted">
-            <p>With NeedHomes Pay My Rent, you can start preparing for your annual rent payment ahead of time. Save towards 30% of your annual rent over 90 days, while becoming eligible for the remaining 70% rent financing through our financing structure and financial partners.</p>
-            <p>Instead of struggling to raise your full annual rent at once, you can plan ahead, build a consistent savings history, and work towards having your rent covered when it is due.</p>
-          </div>
-        </div>
-        <img loading="lazy" decoding="async" src="/images/pay-my-rent-hero.webp" alt="Man celebrating after paying his rent from his phone" className="w-full rounded-2xl object-cover" />
-      </section>
-      <section className="pb-20 page-x">
-        <h2 className="text-5xl font-semibold">How it Works</h2>
-        <ol className="mt-6 divide-y divide-ink/10">
-          {steps.map((s, i) => (
-            <li key={s.title} className="py-7">
-              <div className="flex items-center gap-4">
-                {s.icon ? <img loading="lazy" decoding="async" src={`/images/${s.icon}.webp`} alt="" className="size-20" />
-                  : <span aria-hidden className="grid size-16 place-items-center rounded-full bg-primary-50 text-2xl font-semibold text-primary">{i + 1}</span>}
-                <h3 className="text-2xl font-medium">{s.title}</h3>
-              </div>
-              <div className="mt-4 max-w-5xl space-y-3 text-muted">
-                {s.text.map(t => <p key={t}>{t}</p>)}
-                {s.list && <ul className="ml-5 list-disc space-y-1 text-sm">{s.list.map(l => <li key={l}>{l}</li>)}</ul>}
-                {s.after?.map(t => <p key={t}>{t}</p>)}
-              </div>
-            </li>
-          ))}
-        </ol>
-        <Link to="/pay-my-rent" className="mt-6 inline-block rounded-xl bg-primary px-8 py-3.5 font-medium text-white">Get Started</Link>
-      </section>
-      <CtaBand single title="Plan Ahead. Save Consistently." accent="Pay Your Rent." text="Join others using Pay My Rent to prepare for their annual rent and reduce the financial pressure when rent is due" primaryLabel="Pay my rent Now" primaryTo="/pay-my-rent" />
-    </>
-  )
-}
+import FaqList from '../components/FaqList.jsx'
+const app='https://app.needhomespdc.com/'
+const steps=[[ClipboardList,'Submit Your Application','Create an account or sign in, then provide your personal, employment and financial information.'],[UserRoundCheck,'Complete Verification','Your information undergoes identity verification, eligibility checks and credit assessment.'],[ReceiptText,'Review Your Financing Offer','See your annual rent, applicable interest, total financing amount, initial 30% payment and outstanding 70%.'],[WalletCards,'Pay Your Initial 30%','Review and accept your financing offer, then make the required initial payment.'],[FileSearch,'Complete Landlord and Property Verification','Submit the required landlord, property and bank account information before disbursement.'],[Landmark,'Receive Rent Disbursement','NeedHomes pays the agreed rent directly to your verified landlord or authorised recipient.'],[CalendarCheck,'Repay Over 10 Months','Repay the outstanding 70% through 10 equal monthly instalments via the approved Wema debit mandate.']]
+const benefits=[[Banknote,'Flexible Rent Financing','Meet your annual rent obligation without paying the entire amount upfront.'],[ReceiptText,'Transparent Breakdown','Review the interest, total obligation and repayment schedule before accepting.'],[Building2,'Direct Disbursement','Approved rent is paid directly to your verified landlord or authorised recipient.'],[CalendarCheck,'Predictable Repayments','Spread your outstanding financing balance across 10 months.'],[LineChart,'Track Your Financing','Monitor repayments, payment history and your outstanding balance.']]
+const faqs=[['What is NeedHomes Pay My Rent?','It is a rent financing solution that lets eligible customers pay 30% of their total financing amount upfront and repay the remaining 70% over 10 months.'],['Do I need to pay my entire annual rent upfront?','No. You pay an initial 30% and spread the remaining 70% across 10 monthly instalments.'],['Is the initial 30% calculated on my annual rent?','It is calculated on the total financing amount, comprising your annual rent and applicable interest.'],['Is there an interest charge?','Yes. Your financing breakdown shows the applicable interest before you accept the offer.'],['How will my landlord receive the rent?','After payment and verification, the agreed rent is paid directly to your verified landlord or authorised recipient.'],['How long is the repayment period?','The outstanding 70% is repaid over 10 equal monthly instalments.'],['How are monthly repayments collected?','Automatic repayments are facilitated through Wema under the approved debit mandate arrangement.'],['Does submitting an application guarantee approval?','No. Applications are subject to eligibility, identity verification, credit assessment and approval.'],['Can I monitor my repayment progress?','Yes. Your dashboard shows the repayment schedule, payment history and outstanding balance.']]
+export default function PayMyRent(){return <>
+<Hero tag="Pay My Rent" title="Pay Your Annual Rent Upfront. Repay Over 10 Months" text="Pay an initial 30% of the total financing amount and spread the remaining 70% over 10 monthly instalments." primaryLabel="Apply for Rent Financing" primaryTo={app}/>
+<section className="grid items-center gap-10 py-20 page-x lg:grid-cols-2"><div><span className="inline-flex items-center gap-2 rounded-full border border-ink/15 px-3 py-1.5 text-sm"><BadgeCheck size={16}/> Rent financing made flexible</span><h2 className="mt-5 text-4xl font-semibold leading-tight md:text-5xl">A Smarter Way to Manage Your Annual Rent</h2><div className="mt-6 max-w-[620px] space-y-4 text-lg leading-relaxed text-muted"><p>Paying annual rent upfront can place significant pressure on your finances. Pay My Rent helps eligible individuals meet their rent obligations without paying the entire amount at once.</p><p>Whether you are a salaried employee, self-employed professional or business owner, you can access a more flexible approach to paying your annual rent.</p></div><p className="mt-5 text-sm text-muted">All applications are subject to eligibility, verification and credit assessment.</p></div><img loading="lazy" decoding="async" src="/images/pay-my-rent-hero.webp" alt="Customer using NeedHomes Pay My Rent" className="w-full rounded-2xl object-cover"/></section>
+<section className="bg-[#F5F7FA] py-20 page-x"><h2 className="text-4xl font-semibold md:text-5xl">How It Works</h2><p className="mt-4 text-lg text-muted">Access rent financing through a clear, guided process.</p><ol className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">{steps.map(([Icon,title,text],i)=><li key={title} className="rounded-2xl bg-white p-6 shadow-sm"><div className="flex items-center justify-between"><span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary"><Icon size={24}/></span><span className="text-3xl font-semibold text-primary/25">{String(i+1).padStart(2,'0')}</span></div><h3 className="mt-5 text-xl font-semibold">{title}</h3><p className="mt-3 text-lg leading-relaxed text-muted">{text}</p></li>)}</ol></section>
+<section className="py-20 page-x"><h2 className="text-4xl font-semibold md:text-5xl">Why Choose Pay My Rent?</h2><div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-5">{benefits.map(([Icon,title,text])=><article key={title} className="rounded-2xl border border-ink/10 p-6"><span className="grid size-12 place-items-center rounded-xl bg-primary text-white"><Icon size={24}/></span><h3 className="mt-5 text-xl font-semibold">{title}</h3><p className="mt-3 text-lg leading-relaxed text-muted">{text}</p></article>)}</div></section>
+<section className="grid gap-6 bg-black py-20 text-white page-x lg:grid-cols-2"><div className="rounded-3xl border border-white/15 p-7 md:p-10"><WalletCards className="text-primary" size={34}/><h2 className="mt-5 text-3xl font-semibold md:text-4xl">Understand Your Repayment Structure</h2><div className="mt-8 grid gap-4 sm:grid-cols-2"><div className="rounded-2xl bg-white/10 p-6"><strong className="text-4xl text-primary">30%</strong><h3 className="mt-3 text-xl">Initial Payment</h3><p className="mt-2 text-lg text-white/75">Paid before rent disbursement.</p></div><div className="rounded-2xl bg-white/10 p-6"><strong className="text-4xl text-primary">70%</strong><h3 className="mt-3 text-xl">Outstanding Balance</h3><p className="mt-2 text-lg text-white/75">Repaid in 10 monthly instalments.</p></div></div><p className="mt-6 text-lg text-white/75">The total financing amount comprises your agreed annual rent and applicable interest.</p></div><div className="rounded-3xl bg-white p-7 text-ink md:p-10"><ShieldCheck className="text-primary" size={34}/><h2 className="mt-5 text-3xl font-semibold md:text-4xl">Who Can Apply?</h2><p className="mt-5 text-lg text-muted">Eligible individuals who require support to meet their annual rent obligations.</p><ul className="mt-6 space-y-4 text-lg"><li className="flex gap-3"><BadgeCheck className="mt-1 shrink-0 text-primary" size={20}/>A salaried employee with verifiable income.</li><li className="flex gap-3"><BadgeCheck className="mt-1 shrink-0 text-primary" size={20}/>A business owner with verifiable financial records.</li></ul><p className="mt-6 text-sm text-muted">Subject to eligibility, identity verification and credit assessment.</p></div></section>
+<section className="bg-[#F5F7FA] py-20 page-x"><span className="inline-flex rounded-full border border-ink/15 px-3 py-1.5 text-sm">FAQ</span><h2 className="mb-10 mt-4 text-4xl font-semibold md:text-5xl">Frequently Asked <span className="text-muted">Questions (FAQ)</span></h2><FaqList items={faqs}/></section>
+<CtaBand single title="Make Your Next Rent Payment" accent="Easier" text="Take control of your rent payments with a structured financing option designed to give you greater flexibility." primaryLabel="Get Started with Pay My Rent" primaryTo={app}/>
+</>}

@@ -11,7 +11,7 @@ const pages = {
   '/investment/land-banking': ['Land Banking | NeedHomes', 'Own verified land in high-growth areas, hold for appreciation, and exit for strong long-term returns.'],
   '/investment/co-development': ['Co-Development | NeedHomes', 'Co-fund verified real estate projects from the ground up and receive your share of the property on completion.'],
   '/investment/fractional-ownership': ['Fractional Ownership | NeedHomes', 'Own a share of premium real estate from as low as ₦50,000 and earn rental income or capital appreciation.'],
-  '/pay-my-rent': ['Pay My Rent | NeedHomes', 'Save 30% of your annual rent over 90 days and become eligible for financing on the remaining 70%. Coming soon.'],
+  '/pay-my-rent': ['Pay My Rent | NeedHomes', 'Pay 30% of your total rent financing amount upfront and repay the remaining 70% over 10 monthly instalments, subject to eligibility and approval.'],
   '/faq': ['FAQs | NeedHomes', 'Answers to common questions about creating an account, investing in a property, withdrawals, security and returns on NeedHomes.'],
   '/terms': ['Terms and Conditions | NeedHomes', 'The terms that govern use of the NeedHomes platform, investment services, payments and Save-to-Own programs.'],
   '/privacy': ['Privacy Policy | NeedHomes', 'How NeedHomes collects, uses, shares and protects your personal information under the Nigeria Data Protection Act.'],

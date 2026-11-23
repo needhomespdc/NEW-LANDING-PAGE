@@ -16,7 +16,10 @@ export async function getReviews() {
       headers: { 'X-Goog-Api-Key': KEY, 'X-Goog-FieldMask': 'rating,userRatingCount,googleMapsUri,reviews' },
       next: { revalidate: 86400 },
     })
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    if (!res.ok) {
+      const errorBody = await res.json().catch(() => null)
+      throw new Error(errorBody?.error?.message || `HTTP ${res.status}`)
+    }
     const d = await res.json()
     const reviews = (d.reviews ?? [])
       .filter(r => r.rating >= 4 && r.text?.text)
@@ -26,7 +29,9 @@ export async function getReviews() {
     const summary = d.rating ? { rating: Number(d.rating).toFixed(1), count: d.userRatingCount, url: d.googleMapsUri } : null
     return { reviews, summary }
   } catch (e) {
-    console.error('Could not load Google reviews:', e.message)
-    return { reviews: [], summary: null }
+    // Keep the homepage usable when Google rejects a key or is temporarily unavailable.
+    // A warning avoids triggering Next.js' development error overlay.
+    console.warn('Google reviews unavailable; using fallback reviews:', e.message)
+    return { reviews: sample, summary: null }
   }
 }

@@ -34,17 +34,20 @@ export function mapProperty(r) {
   const [offerStat, leftStat] = r.listingStats ?? []
   const slots = Number(r.inventoryAvailable ?? leftStat?.value ?? 0)
   const unit = (leftStat?.label ?? '').match(/slot|plot|unit/i)?.[0]?.toLowerCase() ?? 'unit'
-  const type = TYPES[String(r.investmentModelType ?? '').toLowerCase().replace(/_/g, '-')] ?? 'Fractional'
+  const rawType = String(r.investmentModelType ?? '').toLowerCase().replace(/_/g, '-')
+  const type = tidyName(r.investmentModelTypeLabel) || TYPES[rawType] || tidyName(rawType.replace(/-/g, ' ')) || 'Other'
   return {
     slug: r.slug ?? String(r.id),
     name: tidyName(r.title),
     type,
+    modelType: rawType,
     loc: tidyLoc(r.location),
     price: naira(r.minInvestment),               // price per slot / plot / unit
     minInvestment: r.minInvestment ?? null,
     totalPrice: r.totalPrice ? naira(r.totalPrice) : null,
     unit,
     slots,
+    inventoryTotal: Number(r.inventoryTotal ?? 0),
     offer: offerStat?.value ?? windowLabel(r) ?? 'Open',
     offerLabel: (offerStat?.label ?? 'Offer period').replace(/^Inv\.?\s*/i, 'Investment '),
     isNew: Boolean(r.isNewListing),
@@ -53,17 +56,30 @@ export function mapProperty(r) {
     featured: Boolean(r.isHotSelling) && slots > 0,   // home page slider shows hot-selling properties that are still available
     imageUrl: r.primaryImageUrl ?? undefined,
     description: r.description ?? '',
-    kind: r.propertyKindLabel,
-    returnType: r.returnTypeLabel,
+    kind: tidyName(r.propertyKindLabel ?? r.propertyKind),
+    returnType: tidyName(r.returnTypeLabel ?? r.returnType),
     updatedAt: r.updatedAt ?? r.publishedAt ?? null,
     landSize: r.landSize ?? null,
     buildingPermitNumber: r.buildingPermitNumber ?? null,
     developmentStage: r.developmentStageLabel ?? r.developmentStage ?? null,
+    statusLabel: r.statusLabel ?? r.status ?? null,
+    investmentWindowStart: r.investmentWindowStart ?? null,
+    investmentWindowEnd: r.investmentWindowEnd ?? null,
+    investmentWindowMonths: r.investmentWindowMonths ?? null,
+    projectEndDate: r.projectEndDate ?? null,
+    allowResale: Boolean(r.allowResale),
+    buyBackOption: r.buyBackOption ?? null,
     canAcceptInvestments: r.canAcceptInvestments ?? !(/sold/i.test(r.status ?? '') || slots === 0),
     highlights: Array.isArray(r.highlights) ? r.highlights : [],
     documents: Array.isArray(r.documents) ? r.documents : [],
     keyFacts: Array.isArray(r.keyFacts) ? r.keyFacts : [],
     images: Array.isArray(r.images) ? r.images : [],
+    video: r.video ?? null,
+    managementFees: r.managementFees ?? null,
+    milestones: Array.isArray(r.milestones) ? r.milestones : [],
+    projectManagerName: tidyName(r.projectManagerName),
+    projectManagerContact: r.projectManagerContact ?? null,
+    projectManagerImageUrl: r.projectManagerImageUrl ?? null,
   }
 }
 

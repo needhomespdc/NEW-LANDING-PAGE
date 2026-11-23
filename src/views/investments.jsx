@@ -45,7 +45,7 @@ const codev = {
     text: ["Your NeedHomes co-development journey doesn't have to end at handover. Once construction is completed, you can list your property for resale directly on the NeedHomes platform."] },
   key: { img: 'codev-key', alt: 'Investor and developer shaking hands in front of a building site', tag: 'Why Co-Develop with NeedHomes?', heading: ['Stronger Projects.', 'Shared Ownership.'],
     text: ['We turn land and capital into profitable real estate opportunities.', 'Partner with NeedHomes for trusted execution, Project Milestone, shared returns, and market-driven projects from development to sales.'], button: 'Join a Project Today' },
-  cta: cta('Ready to Partner in', 'Development', 'Join investors who are building wealth by holding strategic land over time'),
+  cta: cta('Ready to Partner in', 'Development?', 'Join investors who are building wealth by holding strategic land over time'),
 }
 const fractional = {
   tag: 'Fractional Ownership', title: 'Own a share of real estate and earn rental and capital appreciation',
@@ -58,7 +58,7 @@ const fractional = {
   middle: { type: 'band', tag: 'Exits', heading: 'Ready to Exit Your Investment?', text: ['Request an exit from your eligible fractional property investment and view your estimated exit value, applicable terms and next steps.'] },
   key: { img: 'fractional-key', alt: 'Apartment towers against a blue sky', tag: 'Perfect For', heading: ['Who Is This For?'],
     text: [], bullets: ['First-time investors looking to start small', 'Busy professionals building long-term wealth', 'Anyone who wants passive income from real estate', 'Investors who believe in the future of real estate'], button: 'Invest Now' },
-  cta: cta('Ready to Start your', 'Investment Journey', 'Join other investors and own a fraction of a property, invest within your means, and grow your real estate portfolio with NeedHomes'),
+  cta: cta('Ready to Start your', 'Investment Journey?', 'Join other investors and own a fraction of a property, invest within your means, and grow your real estate portfolio with NeedHomes'),
 }
 export const Outright = () => <InvestmentPage c={outright} />
 export const LandBanking = () => <InvestmentPage c={land} />
