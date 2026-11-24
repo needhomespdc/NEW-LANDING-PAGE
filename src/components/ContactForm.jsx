@@ -38,7 +38,7 @@ export default function ContactForm({ form, title, intro, button, id }) {
         <label className={`${label} sm:col-span-2`}>Your message<textarea name="message" rows={7} className={`${field} resize-none`} /></label>
       </div>
       <p className="mt-5 text-sm text-muted">By providing your name, phone number and email you consent to NeedHomes Property Investment Limited's use of your personal data in accordance with the <a href="/privacy" className="text-primary">Privacy Policy</a>.</p>
-      <CaptchaField form={form} />`n      <button disabled={status.state === 'sending' || !!emailError} className="mt-5 rounded-xl bg-primary px-10 py-3.5 font-medium text-white disabled:opacity-60">{status.state === 'sending' ? 'Sending…' : button}</button>
+      <CaptchaField form={form} />     <button disabled={status.state === 'sending' || !!emailError} className="mt-5 rounded-xl bg-primary px-10 py-3.5 font-medium text-white disabled:opacity-60">{status.state === 'sending' ? 'Sending…' : button}</button>
       {status.state === 'error' && <p role="alert" className="mt-4 text-sm text-red-600">{status.message}</p>}
       <FormSuccessModal
         open={showSuccess}

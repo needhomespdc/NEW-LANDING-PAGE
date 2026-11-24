@@ -8,7 +8,7 @@ import Hero from '../components/Hero.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 import PropertyBadges from '../components/PropertyBadges.jsx'
 
-const PAGE_SIZE = 6
+const PAGE_SIZE = 12
 const PRICE_RANGES = [
   { value: 'under-500k', label: 'Under ₦500,000', min: 0, max: 499999 },
   { value: '500k-1m', label: '₦500,000 – ₦1,000,000', min: 500000, max: 1000000 },
