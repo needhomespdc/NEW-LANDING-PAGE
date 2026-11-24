@@ -18,7 +18,7 @@ export default function AgentPartner() {
       <Hero tag="Partner" title="Turn Property Connections Into Real Income" primaryLabel="Become a Partner Agent" primaryTo="/contact"
         text="Are you ready to promote properties, connect buyers and earn commission on successful sales?" />
       <section className="py-20 page-x">
-        <h2 className="text-4xl font-semibold md:text-5xl">Become a NeedHomes Partner Agent</h2>
+        <h2 className="text-4xl font-semibold md:text-5xl">Become a NeedHomes Realtor Partner</h2>
         <p className="mt-5 max-w-4xl text-sm text-muted">Promote verified NeedHomes properties to your network and earn a commission whenever a buyer purchases through your unique referral link.</p>
         <div className="mt-8 grid items-start gap-8 lg:grid-cols-2">
           <div>

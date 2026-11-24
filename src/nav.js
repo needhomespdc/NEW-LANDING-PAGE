@@ -6,14 +6,14 @@ export const investmentLinks = [
   { label: 'Save to own', to: '/investment/save-to-own' },
 ]
 export const partnerLinks = [
-  { label: 'Developer partner', to: '/partner' },
-  { label: 'Agent partner', to: '/partner/agent' },
+  { label: 'Property Developers', to: '/partner' },
+  { label: 'Realtor Partners', to: '/partner/agent' },
 ]
 export const navLinks = [
   { label: 'About us', to: '/about' },
   { label: 'Investment', children: investmentLinks },
   { label: 'Property Hub', to: '/property-hub' },
   { label: 'Pay My Rent', to: '/pay-my-rent' },
-  { label: 'Partner', children: partnerLinks },
+  { label: 'Partners', children: partnerLinks },
   { label: 'Contact', to: '/contact' },
 ]

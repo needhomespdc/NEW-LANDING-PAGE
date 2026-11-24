@@ -8,7 +8,7 @@ import { investmentLinks } from '../nav.js'
 import { links, ext } from '../links.js'
 import { useDownloadApp } from './DownloadAppProvider.jsx'
 
-const company = [['About us', '/about'], ['Partner', '/partner'], ['Property Hub', '/property-hub'], ['Contact Us', '/contact']]
+const company = [['About us', '/about'], ['Partners', '/partner'], ['Property Hub', '/property-hub'], ['Contact Us', '/contact']]
 const privacy = [['Privacy policy', '/privacy'], ['Terms and condition', '/terms'], ['FAQ', '/faq'], ['Deactivate Account', '/account-deactivation'], ['Request Data Deletion', '/data-deletion']]
 const socials = [[XLogo, 'X', 'x'], [Facebook, 'Facebook', 'facebook'], [Instagram, 'Instagram', 'instagram'], [Linkedin, 'LinkedIn', 'linkedin'], [Youtube, 'YouTube', 'youtube'], [Music2, 'TikTok', 'tiktok'], [MessageCircle, 'WhatsApp', 'whatsapp']]
 
