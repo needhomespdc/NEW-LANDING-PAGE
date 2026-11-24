@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { MessageCircle, Send, X } from 'lucide-react'
+import { Send, X } from 'lucide-react'
+import { FaWhatsapp } from 'react-icons/fa'
 
 const WHATSAPP_CONTACT = 'https://wa.me/2349018464742'
 
@@ -21,7 +22,7 @@ export default function FloatingWhatsApp() {
       {open && (
         <section aria-label="NeedHomes WhatsApp chat" className="mb-3 w-[min(350px,calc(100vw-32px))] overflow-hidden rounded-2xl border border-black/10 bg-white shadow-[0_18px_60px_rgba(0,0,0,.24)]">
           <div className="flex items-center justify-between bg-black px-5 py-4 text-white">
-            <div className="flex items-center gap-3"><span className="grid size-9 place-items-center rounded-full bg-[#25D366]"><MessageCircle size={20} /></span><div><h2 className="font-semibold">NeedHomes</h2><p className="text-xs text-white/70">WhatsApp support</p></div></div>
+            <div className="flex items-center gap-3"><span className="grid size-9 place-items-center rounded-full bg-[#25D366]"><FaWhatsapp size={20} /></span><div><h2 className="font-semibold">NeedHomes</h2><p className="text-xs text-white/70">WhatsApp support</p></div></div>
             <button type="button" onClick={() => setOpen(false)} aria-label="Close WhatsApp chat" className="grid size-9 place-items-center rounded-full hover:bg-white/10"><X size={19} /></button>
           </div>
           <form onSubmit={continueToWhatsApp} className="p-4">
@@ -35,7 +36,7 @@ export default function FloatingWhatsApp() {
       )}
       <button type="button" onClick={() => setOpen(value => !value)} aria-expanded={open} aria-label={open ? 'Close NeedHomes WhatsApp chat' : 'Chat with NeedHomes on WhatsApp'}
         className="group ml-auto grid size-14 place-items-center rounded-full border-4 border-white bg-[#25D366] text-white shadow-[0_12px_32px_rgba(0,0,0,.24)] transition hover:-translate-y-1 hover:bg-[#1FB95A] focus-visible:-translate-y-1 md:size-16">
-        {open ? <X size={28} aria-hidden="true" /> : <MessageCircle size={28} strokeWidth={2.2} aria-hidden="true" />}
+        {open ? <X size={28} aria-hidden="true" /> : <FaWhatsapp size={28} strokeWidth={2.2} aria-hidden="true" />}
         {!open && <span className="absolute right-full mr-3 hidden whitespace-nowrap rounded-lg bg-black px-3 py-2 text-sm font-medium text-white opacity-0 shadow-lg transition-opacity md:block md:group-hover:opacity-100">Chat with NeedHomes</span>}
       </button>
     </div>

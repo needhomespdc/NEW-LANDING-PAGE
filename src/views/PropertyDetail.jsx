@@ -1,11 +1,12 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import { FaWhatsapp } from 'react-icons/fa'
 import Image from 'next/image'
 import { Link } from '@/lib/router'
 import {
   ArrowLeft, Building2, Car, ChevronLeft, ChevronRight, Copy, Download,
-  ExternalLink, FileText, Hammer, MapPin, MessageCircle, Phone, Play,
+  ExternalLink, FileText, Hammer, MapPin, Phone, Play,
   ShieldCheck, Sparkles, Star, TrendingUp, Wrench, X,
 } from 'lucide-react'
 import Navbar from '../components/Navbar.jsx'
@@ -79,7 +80,8 @@ export default function PropertyDetail({ property: p }) {
   const openWaitlist = useWaitlist()
   const model = p.modelType || String(p.type || '').toLowerCase().replace(/\s+/g, '-')
   const config = modelConfig[model] || modelConfig.fractional
-  const windowOpen = Boolean(p.canAcceptInvestments && p.slots > 0)
+  const soldOut = Boolean(p.soldOut || p.slots <= 0 || /sold/i.test(String(p.status || '')))
+  const windowOpen = Boolean(!soldOut && p.canAcceptInvestments && p.slots > 0)
   const gallery = useMemo(() => [
     ...(p.images || []).slice().sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0)).map(image => ({ src: image.secureUrl || image.url, alt: image.altText || `${p.name} property image` })),
     { src: imgSrc(p), alt: `${p.name} in ${p.loc}` },
@@ -179,14 +181,14 @@ export default function PropertyDetail({ property: p }) {
 
             {(p.projectManagerName || p.projectManagerContact) && <div>
               <h2 className="mb-3 text-xl font-semibold">Have questions about this investment?</h2>
-              <section className="rounded-2xl bg-white p-5"><p className="font-semibold text-muted">Project Manager</p><div className="mt-3 flex items-center gap-3">{p.projectManagerImageUrl ? <img src={p.projectManagerImageUrl} alt="" className="size-14 rounded-full object-cover" /> : <span className="grid size-14 place-items-center rounded-full bg-primary-50 text-primary"><Building2 /></span>}<div className="min-w-0 flex-1"><b className="block">{p.projectManagerName || 'NeedHomes Adviser'}</b><span className="text-muted">{p.projectManagerContact}</span></div>{managerPhone && <><a href={`https://wa.me/${managerPhone}`} target="_blank" rel="noopener noreferrer" aria-label="Message project manager on WhatsApp" className="text-green-600"><MessageCircle size={24} /></a><a href={`tel:+${managerPhone}`} aria-label="Call project manager" className="text-primary"><Phone size={23} /></a></>}</div></section>
+              <section className="rounded-2xl bg-white p-5"><p className="font-semibold text-muted">Project Manager</p><div className="mt-3 flex items-center gap-3">{p.projectManagerImageUrl ? <img src={p.projectManagerImageUrl} alt="" className="size-14 rounded-full object-cover" /> : <span className="grid size-14 place-items-center rounded-full bg-primary-50 text-primary"><Building2 /></span>}<div className="min-w-0 flex-1"><b className="block">{p.projectManagerName || 'NeedHomes Adviser'}</b><span className="text-muted">{p.projectManagerContact}</span></div>{managerPhone && <><a href={`https://wa.me/${managerPhone}`} target="_blank" rel="noopener noreferrer" aria-label="Message project manager on WhatsApp" className="text-green-600"><FaWhatsapp size={24} /></a><a href={`tel:+${managerPhone}`} aria-label="Call project manager" className="text-primary"><Phone size={23} /></a></>}</div></section>
             </div>}
           </div>
         </div>
       </div>
 
       <div className="sticky bottom-0 z-30 border-t border-black/5 bg-white/95 px-4 py-4 shadow-[0_-10px_35px_rgba(0,0,0,.08)] backdrop-blur md:px-[66px]">
-        <div className="mx-auto flex max-w-4xl items-center gap-6"><div className="shrink-0"><p className="text-sm text-muted">{config.priceLabel}</p><strong className="text-xl">{money(model === 'land-banking' || model === 'outright' || model === 'save-to-own' ? purchaseTotal : p.minInvestment) || 'Contact us'}</strong></div>{windowOpen ? <a href="https://app.needhomespdc.com/" target="_blank" rel="noopener noreferrer" className="flex-1 rounded-2xl bg-primary px-6 py-4 text-center font-semibold text-white">{config.cta}</a> : <button type="button" onClick={() => openWaitlist(`property-${p.slug}`)} className="flex-1 rounded-2xl bg-primary px-6 py-4 font-semibold text-white">{config.cta}</button>}</div>
+        <div className="mx-auto flex max-w-4xl items-center gap-6"><div className="shrink-0"><p className="text-sm text-muted">{config.priceLabel}</p><strong className="text-xl">{money(model === 'land-banking' || model === 'outright' || model === 'save-to-own' ? purchaseTotal : p.minInvestment) || 'Contact us'}</strong></div>{soldOut ? <button type="button" disabled aria-disabled="true" className="flex-1 cursor-not-allowed rounded-2xl bg-red-100 px-6 py-4 font-semibold text-red-600 opacity-70">Sold Out</button> : <button type="button" onClick={() => openWaitlist(`property-${p.slug}`)} className="flex-1 rounded-2xl bg-primary px-6 py-4 font-semibold text-white">{config.cta}</button>}</div>
       </div>
 
       {galleryOpen && <div role="dialog" aria-modal="true" aria-label={`${p.name} image gallery`} onMouseDown={event => { if (event.target === event.currentTarget) setGalleryOpen(false) }} className="fixed inset-0 z-[200] flex flex-col bg-black/95 p-4 md:p-8">
