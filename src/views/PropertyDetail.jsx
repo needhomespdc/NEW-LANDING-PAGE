@@ -127,22 +127,24 @@ export default function PropertyDetail({ property: p }) {
       <div className="mx-auto max-w-[1480px] px-4 pb-8 pt-8 md:px-[66px] md:pt-12">
         <div className="flex items-start gap-4">
           <Link to="/property-hub" aria-label="Back to Property Hub" className="mt-1 grid size-10 shrink-0 place-items-center rounded-full transition hover:bg-white"><ArrowLeft size={22} /></Link>
-          <div><h1 className="text-3xl font-semibold md:text-4xl">{p.name}</h1><a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-2 text-muted transition hover:text-primary"><MapPin size={20} />{p.loc}<ExternalLink size={14} /></a></div>
+          <div><h1 className="text-2xl font-semibold sm:text-3xl md:text-4xl">{p.name}</h1><a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-2 text-muted transition hover:text-primary"><MapPin size={20} />{p.loc}<ExternalLink size={14} /></a></div>
         </div>
 
-        <section className="mt-7 rounded-2xl bg-white p-4 md:p-5">
-          <div className="relative aspect-[16/7] min-h-[280px] overflow-hidden rounded-2xl bg-[#E8EDF2]">
+        <section className="-mx-4 mt-6 bg-white md:mx-0 md:mt-7 md:rounded-2xl md:p-5">
+          <div className="relative aspect-[4/3] overflow-hidden bg-[#E8EDF2] sm:aspect-[16/9] md:rounded-2xl lg:aspect-[16/7]">
             <Image src={active.src} alt={active.alt} fill priority sizes="(max-width: 1024px) 100vw, 1300px" className="object-cover" />
             {gallery.length > 1 && <>
-              <button type="button" onClick={() => changeImage(-1)} aria-label="Previous property image" className="absolute left-4 top-1/2 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-black/45 text-white backdrop-blur-sm"><ChevronLeft /></button>
-              <button type="button" onClick={() => changeImage(1)} aria-label="Next property image" className="absolute right-4 top-1/2 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-black/45 text-white backdrop-blur-sm"><ChevronRight /></button>
-              <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1.5">{gallery.map((image, index) => <button key={image.src} type="button" onClick={() => setActiveIndex(index)} aria-label={`View image ${index + 1}`} className={`size-3 rounded-full border-2 border-white ${index === activeIndex ? 'bg-primary' : 'bg-white/80'}`} />)}</div>
+              <button type="button" onClick={() => changeImage(-1)} aria-label="Previous property image" className="absolute left-3 top-1/2 grid size-9 -translate-y-1/2 place-items-center rounded-full bg-black/45 text-white backdrop-blur-sm md:left-4 md:size-10"><ChevronLeft /></button>
+              <button type="button" onClick={() => changeImage(1)} aria-label="Next property image" className="absolute right-3 top-1/2 grid size-9 -translate-y-1/2 place-items-center rounded-full bg-black/45 text-white backdrop-blur-sm md:right-4 md:size-10"><ChevronRight /></button>
+              <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5 md:bottom-4">{gallery.map((image, index) => <button key={image.src} type="button" onClick={() => setActiveIndex(index)} aria-label={`View image ${index + 1}`} className={`size-2.5 rounded-full border-2 border-white md:size-3 ${index === activeIndex ? 'bg-primary' : 'bg-white/80'}`} />)}</div>
             </>}
-            <div className="absolute bottom-4 left-4 flex flex-wrap gap-2"><span className={`rounded-full px-4 py-1.5 text-sm font-medium ${config.tag}`}>{config.label}</span><PropertyBadges property={{ ...p, type: '' }} compact /></div>
-            <button type="button" onClick={() => setGalleryOpen(true)} className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-lg bg-black/55 px-3 py-2 text-sm text-white backdrop-blur-sm"><ExternalLink size={16} />Click to expand</button>
+            <div className="absolute left-3 top-3 flex max-w-[calc(100%-1.5rem)] flex-wrap gap-2 md:bottom-4 md:left-4 md:top-auto"><span className={`rounded-full px-3 py-1 text-xs font-medium md:px-4 md:py-1.5 md:text-sm ${config.tag}`}>{config.label}</span><PropertyBadges property={{ ...p, type: '' }} compact /></div>
+            <button type="button" onClick={() => setGalleryOpen(true)} aria-label="Expand image gallery" className="absolute bottom-3 right-3 inline-flex items-center gap-2 rounded-lg bg-black/55 p-2.5 text-sm text-white backdrop-blur-sm md:bottom-4 md:right-4 md:px-3 md:py-2"><ExternalLink size={16} /><span className="hidden md:inline">Click to expand</span></button>
           </div>
-          <h2 className="mt-5 text-lg font-semibold uppercase">About {p.name}</h2>
-          <p className="mt-3 leading-relaxed text-muted">{description}</p>
+          <div className="px-4 py-5 md:px-0 md:pb-0">
+            <h2 className="text-lg font-semibold uppercase">About {p.name}</h2>
+            <p className="mt-3 leading-relaxed text-muted">{description}</p>
+          </div>
         </section>
 
         <div className="mt-5 grid items-start gap-5 lg:grid-cols-[1.05fr_.95fr]">
@@ -187,8 +189,8 @@ export default function PropertyDetail({ property: p }) {
         </div>
       </div>
 
-      <div className="sticky bottom-0 z-30 border-t border-black/5 bg-white/95 px-4 py-4 shadow-[0_-10px_35px_rgba(0,0,0,.08)] backdrop-blur md:px-[66px]">
-        <div className="mx-auto flex max-w-4xl items-center gap-6"><div className="shrink-0"><p className="text-sm text-muted">{config.priceLabel}</p><strong className="text-xl">{money(model === 'land-banking' || model === 'outright' || model === 'save-to-own' ? purchaseTotal : p.minInvestment) || 'Contact us'}</strong></div>{soldOut ? <button type="button" disabled aria-disabled="true" className="flex-1 cursor-not-allowed rounded-2xl bg-red-100 px-6 py-4 font-semibold text-red-600 opacity-70">Sold Out</button> : <button type="button" onClick={() => openWaitlist(`property-${p.slug}`)} className="flex-1 rounded-2xl bg-primary px-6 py-4 font-semibold text-white">{config.cta}</button>}</div>
+      <div className="sticky bottom-0 z-30 border-t border-black/5 bg-white/95 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 shadow-[0_-10px_35px_rgba(0,0,0,.08)] backdrop-blur md:px-[66px] md:py-4">
+        <div className="mx-auto flex max-w-4xl items-center gap-4 md:gap-6"><div className="shrink-0"><p className="text-sm text-muted">{config.priceLabel}</p><strong className="text-xl">{money(model === 'land-banking' || model === 'outright' || model === 'save-to-own' ? purchaseTotal : p.minInvestment) || 'Contact us'}</strong></div>{soldOut ? <button type="button" disabled aria-disabled="true" className="flex-1 cursor-not-allowed rounded-2xl bg-red-100 px-6 py-4 font-semibold text-red-600 opacity-70">Sold Out</button> : <button type="button" onClick={() => openWaitlist(`property-${p.slug}`)} className="flex-1 rounded-2xl bg-primary px-6 py-4 font-semibold text-white">{config.cta}</button>}</div>
       </div>
 
       {galleryOpen && <div role="dialog" aria-modal="true" aria-label={`${p.name} image gallery`} onMouseDown={event => { if (event.target === event.currentTarget) setGalleryOpen(false) }} className="fixed inset-0 z-[200] flex flex-col bg-black/95 p-4 md:p-8">
