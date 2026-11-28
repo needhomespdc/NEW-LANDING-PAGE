@@ -1,8 +1,8 @@
 'use client'
 import { useState } from 'react'
 import { submitForm } from '@/lib/submitForm'
+import { getRecaptchaToken } from '@/lib/recaptcha'
 import FormSuccessModal from './FormSuccessModal.jsx'
-import CaptchaField from './CaptchaField.jsx'
 
 const field = 'mt-1.5 w-full rounded-lg border border-ink/10 bg-white px-4 py-3 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20'
 const label = 'block text-sm uppercase text-muted'
@@ -13,13 +13,13 @@ export default function ContactForm({ form, title, intro, button, id }) {
   const [status, setStatus] = useState({ state: 'idle', message: '' })
   const [showSuccess, setShowSuccess] = useState(false)
   const [emailError, setEmailError] = useState('')
-  const validateEmail = e => { const value=e.currentTarget.value.trim(); const valid=/^[^\\s@]+@[^\\s@]+\\.[A-Za-z]{2,}$/.test(value); setEmailError(value&&!valid?'Please enter a valid email address.':''); e.currentTarget.setCustomValidity(valid||!value?'':'Please enter a valid email address.') }
+  const validateEmail = e => { const value=e.currentTarget.value.trim(); const valid=/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(value); setEmailError(value&&!valid?'Please enter a valid email address.':''); e.currentTarget.setCustomValidity(valid||!value?'':'Please enter a valid email address.') }
   async function onSubmit(e) {
     e.preventDefault()
     const el = e.currentTarget
     setStatus({ state: 'sending', message: '' })
     try {
-      await submitForm(form, Object.fromEntries(new FormData(el)))
+      await submitForm(form, { ...Object.fromEntries(new FormData(el)), ...(await getRecaptchaToken(form)) })
       el.reset()
       setStatus({ state: 'idle', message: '' })
       setShowSuccess(true)
@@ -38,7 +38,7 @@ export default function ContactForm({ form, title, intro, button, id }) {
         <label className={`${label} sm:col-span-2`}>Your message<textarea name="message" rows={7} className={`${field} resize-none`} /></label>
       </div>
       <p className="mt-5 text-sm text-muted">By providing your name, phone number and email you consent to NeedHomes Property Investment Limited's use of your personal data in accordance with the <a href="/privacy" className="text-primary">Privacy Policy</a>.</p>
-      <CaptchaField form={form} />     <button disabled={status.state === 'sending' || !!emailError} className="mt-5 rounded-xl bg-primary px-10 py-3.5 font-medium text-white disabled:opacity-60">{status.state === 'sending' ? 'Sending…' : button}</button>
+      <button disabled={status.state === 'sending' || !!emailError} className="mt-5 rounded-xl bg-primary px-10 py-3.5 font-medium text-white disabled:opacity-60">{status.state === 'sending' ? 'Sending…' : button}</button>
       {status.state === 'error' && <p role="alert" className="mt-4 text-sm text-red-600">{status.message}</p>}
       <FormSuccessModal
         open={showSuccess}
