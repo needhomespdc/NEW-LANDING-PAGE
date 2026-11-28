@@ -3,10 +3,10 @@ import { useState } from 'react'
 import { Link } from '@/lib/router'
 import { Info, Mail } from 'lucide-react'
 import { submitForm } from '@/lib/submitForm'
+import { getRecaptchaToken } from '@/lib/recaptcha'
 import Hero from '../components/Hero.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 import FormSuccessModal from '../components/FormSuccessModal.jsx'
-import CaptchaField from '../components/CaptchaField.jsx'
 
 const a = 'text-primary underline-offset-2 hover:underline'
 const Mail_ = () => <a href="mailto:support@needhomespdc.com" className={a}>support@needhomespdc.com</a>
@@ -17,13 +17,13 @@ function RequestForm({ kind, intro, confirm, button }) {
   const [status, setStatus] = useState({ state: 'idle', message: '' })
   const [showSuccess, setShowSuccess] = useState(false)
   const [emailError, setEmailError] = useState('')
-  const validateEmail = e => { const value=e.currentTarget.value.trim(); const valid=/^[^\\s@]+@[^\\s@]+\\.[A-Za-z]{2,}$/.test(value); setEmailError(value&&!valid?'Please enter a valid email address.':''); e.currentTarget.setCustomValidity(valid||!value?'':'Please enter a valid email address.') }
+  const validateEmail = e => { const value=e.currentTarget.value.trim(); const valid=/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(value); setEmailError(value&&!valid?'Please enter a valid email address.':''); e.currentTarget.setCustomValidity(valid||!value?'':'Please enter a valid email address.') }
   async function onSubmit(e) {
     e.preventDefault()
     const el = e.currentTarget
     setStatus({ state: 'sending', message: '' })
     try {
-      await submitForm(kind, Object.fromEntries(new FormData(el)))
+      await submitForm(kind, { ...Object.fromEntries(new FormData(el)), ...(await getRecaptchaToken(kind)) })
       el.reset()
       setStatus({ state: 'idle', message: '' })
       setShowSuccess(true)
@@ -41,7 +41,7 @@ function RequestForm({ kind, intro, confirm, button }) {
       </div>
       <label className="mt-5 flex items-start gap-3 text-muted"><input required type="checkbox" name="confirm" className="mt-1 size-4 accent-[#EF6A1B]" />{confirm}</label>
       <p className="mt-4 text-sm text-muted">By providing your name, phone number and email you consent to NeedHomes Property Investment Limited's use of your personal data in accordance with the <Link to="/privacy" className={a}>Privacy Policy</Link>.</p>
-      <CaptchaField form={kind} />`n      <button disabled={status.state === 'sending' || !!emailError} className="mt-5 rounded-xl bg-primary px-8 py-3.5 font-medium text-white disabled:opacity-60">{status.state === 'sending' ? 'Sending…' : button}</button>
+      <button disabled={status.state === 'sending' || !!emailError} className="mt-5 rounded-xl bg-primary px-8 py-3.5 font-medium text-white disabled:opacity-60">{status.state === 'sending' ? 'Sending…' : button}</button>
       <p className="mt-5 flex items-center gap-3 text-muted"><Mail size={18} className="text-primary" />Prefer email? Write to support@needhomespdc.com</p>
       {status.state === 'error' && <p role="alert" className="mt-3 text-sm text-red-600">{status.message}</p>}
       <FormSuccessModal

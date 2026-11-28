@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import { FORMS } from '@/lib/forms'
-import { createHmac, randomBytes, timingSafeEqual } from 'node:crypto'
 import { resolveMx } from 'node:dns/promises'
 
 // Very small per-instance rate limit (5 submissions per minute per IP). Add a real limiter if you get abuse.
@@ -12,28 +11,19 @@ const limited = ip => {
   return recent.length > 5
 }
 const fail = (error, status) => NextResponse.json({ error }, { status })
-const captchaSecret = process.env.CAPTCHA_SECRET || process.env.FORM_API_KEY || randomBytes(32).toString('hex')
-const sign = value => createHmac('sha256', captchaSecret).update(value).digest('base64url')
 const disposableDomains = new Set(['mailinator.com','guerrillamail.com','10minutemail.com','tempmail.com','yopmail.com','throwawaymail.com','trashmail.com'])
 
-export async function GET(_request, { params }) {
-  const { form } = await params
-  if (!FORMS[form]) return fail('Unknown form.', 404)
-  const a = Math.floor(Math.random() * 8) + 2
-  const b = Math.floor(Math.random() * 8) + 2
-  const value = [a, b, Date.now() + 10 * 60_000, randomBytes(8).toString('hex')].join(':')
-  return NextResponse.json({ question: `${a} + ${b} = ?`, token: `${Buffer.from(value).toString('base64url')}.${sign(value)}` }, { headers: { 'Cache-Control': 'no-store' } })
-}
-
-function validCaptcha(token, answer) {
+async function verifyRecaptcha(token, action, ip) {
+  const secret = process.env.RECAPTCHA_SECRET_KEY
+  if (!secret) return { ok: false, error: 'reCAPTCHA is not configured.' }
+  if (!token || !action) return { ok: false, error: 'Could not verify this submission. Please try again.' }
   try {
-    const [encoded, supplied] = String(token || '').split('.')
-    const value = Buffer.from(encoded, 'base64url').toString()
-    const [a, b, expires] = value.split(':')
-    const expected = sign(value)
-    if (!supplied || supplied.length !== expected.length || !timingSafeEqual(Buffer.from(supplied), Buffer.from(expected))) return false
-    return Date.now() <= Number(expires) && Number(answer) === Number(a) + Number(b)
-  } catch { return false }
+    const body = new URLSearchParams({ secret, response: token, ...(ip !== 'unknown' && { remoteip: ip }) })
+    const response = await fetch('https://www.google.com/recaptcha/api/siteverify', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body, signal: AbortSignal.timeout(8_000) })
+    const result = await response.json()
+    const minimumScore = Number(process.env.RECAPTCHA_MIN_SCORE || 0.5)
+    return { ok: Boolean(result.success && result.action === action && Number(result.score) >= minimumScore), error: 'This submission could not be verified. Please try again.' }
+  } catch { return { ok: false, error: 'The security check is temporarily unavailable. Please try again.' } }
 }
 
 async function validEmail(email) {
@@ -57,11 +47,13 @@ export async function POST(request, { params }) {
   let body
   try { body = await request.json() } catch { return fail('Invalid request.', 400) }
   if (body.website) return NextResponse.json({ ok: true }) // hidden honeypot field: bots fill it, people do not
-  if (!validCaptcha(body.captchaToken, body.captchaAnswer)) return fail('The security answer was incorrect or expired. Please try again.', 400)
+  const expectedAction = 'form_' + String(form).replace(/[^a-zA-Z0-9_]/g, '_')
+  const recaptcha = await verifyRecaptcha(body.recaptchaToken, body.recaptchaAction, ip)
+  if (!recaptcha.ok || body.recaptchaAction !== expectedAction) return fail(recaptcha.error, 400)
 
   const data = {}
   for (const [k, v] of Object.entries(body)) {
-    if (k === 'website' || k === 'captchaToken' || k === 'captchaAnswer') continue
+    if (k === 'website' || k === 'recaptchaToken' || k === 'recaptchaAction') continue
     if (typeof v === 'string') data[k] = v.trim().slice(0, 5000)
     else if (typeof v === 'boolean') data[k] = v
   }
